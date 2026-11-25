@@ -61,8 +61,6 @@ main{flex:1;display:grid;grid-template-columns:300px auto minmax(0,1fr);gap:18px
 .seg{display:inline-flex;background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:2px;gap:2px}
 .seg button{border:0;background:transparent;color:var(--body);padding:4px 10px;border-radius:7px;font-size:12.5px;font-weight:500;white-space:nowrap}
 .seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(43,37,34,.12);font-weight:600}
-.seg.mode button.on[data-mode=before]{background:var(--alert);color:#fff}
-.seg.mode button.on[data-mode=after]{background:var(--accent);color:#fff}
 .toggle{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink);cursor:pointer;user-select:none}
 .toggle input{display:none}
 .toggle .sw{width:30px;height:17px;border-radius:999px;background:var(--line-2);position:relative;transition:.2s;flex:none}
@@ -311,6 +309,33 @@ table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-
 .outcome p{margin:3px 0 0;font-size:13px;color:var(--ink)}
 .outcome ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;color:var(--body)}
 
+/* ---------- Welcome pop-up ---------- */
+.modal-bg{position:fixed;inset:0;z-index:500;background:rgba(43,37,34,.5);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .25s}
+.modal{position:relative;width:min(600px,100%);max-height:calc(100vh - 32px);overflow-y:auto;background:var(--card);border-radius:18px;padding:24px 26px 22px;box-shadow:0 30px 70px -20px rgba(30,20,15,.55);animation:pop .3s cubic-bezier(.2,.9,.3,1.15)}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+.modal h2{font-size:30px;line-height:1.1;padding-right:36px}
+.modal .lead{margin:6px 0 16px;font-size:13.5px;color:var(--body)}
+.m-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);background:var(--card);color:var(--ink);display:flex;align-items:center;justify-content:center}
+.m-x:hover{border-color:var(--accent);color:var(--accent)}
+.m-step{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.m-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.m-step h4{font-family:var(--sans);font-size:14.5px;font-weight:700}
+.m-step p{margin:3px 0 0;font-size:13px}
+.m-cards{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.m-card{display:flex;gap:10px;align-items:center;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px;font-size:12.5px;color:var(--body)}
+.m-card:hover{border-color:var(--accent)}
+.m-card b{min-width:30px;height:24px;border-radius:7px;background:var(--soft);color:var(--accent);font-family:var(--serif);font-size:16px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
+.m-card span{flex:1}
+.m-card em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap}
+.m-speed{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.m-speed .seg button{padding:6px 14px;font-size:13.5px}
+.m-speed .seg button.try{animation:cardpulse 1.6s infinite;color:var(--accent);font-weight:700}
+.m-speed .note{font-size:12px;color:var(--muted)}
+.m-speed .note.ok{color:var(--ok);font-weight:600}
+.m-foot{display:flex;justify-content:flex-end;margin-top:14px}
+.m-go{border:0;background:var(--accent);color:#fff;border-radius:10px;padding:10px 18px;font-weight:600;font-size:14px}
+.m-go:hover{background:#774C34}
+
 footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
 
 @media (max-width:1100px){
@@ -335,11 +360,8 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
     <p class="sc-intro">All three start the same: at 10:00 on Day 0 a shopper pays ₹2,499 by UPI, the bank debits them, but the payment stays “pending”. Pick how it ends:</p>
     <div id="scCards" style="display:flex;flex-direction:column;gap:8px"></div>
     <div class="opts">
-      <div class="opt"><span class="opt-l">View</span>
-        <div class="seg mode" id="modeSeg"><button data-mode="before">Before (today)</button><button data-mode="after">After (fix)</button></div></div>
       <div class="opt"><span class="opt-l">Speed</span>
         <div class="seg" id="spSeg"><button data-sp="1">1×</button><button data-sp="5">5×</button><button data-sp="20">20×</button></div></div>
-      <div class="opt"><label class="toggle" id="whToggle"><input type="checkbox" id="whMissed"><span class="sw"></span>Webhook missed <span class="small">(scenario A)</span></label></div>
     </div>
     <div class="now">
       <div class="nl"><span id="nowStep">Waiting</span><span class="tnum" id="nowClock">Day 0 · 10:00</span></div>
@@ -362,7 +384,7 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
               <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="#2B2522" opacity=".5"/><rect x="2" y="2" width="15" height="8" rx="1.5" fill="#2B2522"/><rect x="22.5" y="4" width="2" height="4" rx="1" fill="#2B2522" opacity=".5"/></svg>
             </span></div>
             <div class="appbar">
-              <div class="logo">Silver Lane<small>(demo store)</small></div>
+              <div class="logo">Quirksmith</div>
               <div class="ic">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
@@ -381,7 +403,7 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
 
   <!-- Backend -->
   <section class="be">
-    <div class="col-label"><span>Store backend · ops console</span><span id="modePill"></span></div>
+    <div class="col-label"><span>Store backend · ops console</span></div>
     <div class="be-body">
       <div class="panel be-top">
         <div class="clock-wrap">
@@ -391,7 +413,7 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
         <div class="tl"><div class="tl-track" id="tl"></div></div>
       </div>
       <div class="panel">
-        <div class="panel-h"><h4>Orders</h4><span class="sub">Silver Lane (demo store)</span></div>
+        <div class="panel-h"><h4>Orders</h4><span class="sub">Quirksmith</span></div>
         <div id="ordersBox"></div>
       </div>
       <div id="outcomeBox"></div>
@@ -409,7 +431,32 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
   </section>
 </main>
 
-<footer><em>Illustrative prototype. All data simulated.</em> Silver Lane is a fictional store; no real payments, banks or APIs are used.</footer>
+<div class="modal-bg" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wTitle">
+  <div class="modal">
+    <button class="m-x" id="wClose" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 id="wTitle">How to use this simulation</h2>
+    <p class="lead">A shopper pays ₹2,499 to Quirksmith by UPI. Their bank debits them, but the payment gets stuck on “pending”. Watch how the store handles it, on the shopper’s phone and in the store’s backend at the same moment.</p>
+    <div class="m-step"><span class="m-num">1</span><div>
+      <h4>Pick a scenario card</h4>
+      <p>The A, B1 and B2 cards on the left are the only thing you click. Each one plays a different ending. Try one now:</p>
+      <div class="m-cards">
+        <button class="m-card" data-wsc="A"><b>A</b><span>Payment confirmed within 2 hours</span><em>Play ▸</em></button>
+        <button class="m-card" data-wsc="B1"><b>B1</b><span>Not confirmed in 2 hours, money arrives later</span><em>Play ▸</em></button>
+        <button class="m-card" data-wsc="B2"><b>B2</b><span>Not confirmed in 2 hours, money never arrives (runs to Day 5)</span><em>Play ▸</em></button>
+      </div></div></div>
+    <div class="m-step"><span class="m-num">2</span><div>
+      <h4>Sit back and watch</h4>
+      <p>Everything plays by itself. A pointer taps through the phone as the shopper, the backend updates live on the right, and the clock shows the day and time (multi-day gaps skip ahead automatically). The dark box on the left explains each step.</p></div></div>
+    <div class="m-step"><span class="m-num">3</span><div>
+      <h4>Change the speed</h4>
+      <p>The clock runs at 5× by default. Tap <b>20×</b> to try it: each scenario then finishes in under a minute. 1× is slowest. You can change speed any time, even mid-run, from the Speed box on the left.</p>
+      <div class="m-speed"><div class="seg" id="wSpeed"><button data-sp="1">1×</button><button data-sp="5">5×</button><button data-sp="20" class="try">20×</button></div><span class="note" id="wNote">← tap 20×</span></div>
+    </div></div>
+    <div class="m-foot"><button class="m-go" id="wGo">Got it, show me the simulation</button></div>
+  </div>
+</div>
+
+<footer><em>Illustrative prototype. All data simulated.</em> A concept for Quirksmith; not a live Quirksmith system. No real payments, banks or APIs are used.</footer>
 
 <script>
 (() => {
@@ -465,7 +512,7 @@ const RING = (w = 180) => `<svg width="${w}" height="${w}" viewBox="0 0 200 200"
   <path d="M93 52l7-6 7 6-7 10z" fill="#fff" opacity=".6"/></svg>`;
 
 /* ================= State ================= */
-const cfg = { mode: 'after', webhookMissed: false, speed: 5 };
+const cfg = { speed: 5 };
 let scenario = null, st, steps = [], stepIdx = 0, runId = 0, done = false;
 let logSeq = 0, lastSeenLog = 0, bannerTimer = null, shownBanner = null, phoneScale = 1;
 
@@ -477,8 +524,6 @@ function initState() {
     banner: null, outcome: null, title: null, no: 0, skipping: false,
   };
 }
-const after = () => cfg.mode === 'after';
-const missed = () => cfg.webhookMissed && scenario === 'A';
 
 /* ================= Step helpers ================= */
 function log(s, src, msg, kind = '', off = 0) { s.logs.push({ id: ++logSeq, t: s.t + off, src, msg, kind }); }
@@ -486,11 +531,11 @@ function banner(s, b) { s.banner = { ...b, id: Math.random() }; }
 function say(s, who, text, off = 0) { s.ticket.thread.push({ t: s.t + off, who, text }); }
 function mark(s, label, kind) { s.marks.push({ t: s.t, label, kind }); }
 function cronCount(s) {
-  if (!after() || !s.order) return 0;
+  if (!s.order) return 0;
   const end = Math.min(s.t, s.cronStop ?? Infinity);
   return Math.max(0, Math.floor((end - START) / 900));
 }
-const cronWatching = s => after() && !!s.order && s.cronStop === null;
+const cronWatching = s => !!s.order && s.cronStop === null;
 
 function confirmOrder(s, late) {
   s.order.status = 'confirmed'; s.order.flash = true; s.phone.pay = null; s.cronStop = s.t;
@@ -502,15 +547,15 @@ function confirmOrder(s, late) {
   log(s, 'TICKET', late ? `Ticket ${TICKET_ID} updated with late payment, then CLOSED` : `Ticket ${TICKET_ID} → CLOSED (auto, payment confirmed)`, '', 2);
   log(s, 'NOTIFY', `Customer notified: push + SMS + ticket thread (“${late ? 'payment came through' : 'Payment received'}”)`, '', 3);
   s.phone.status = late ? 'lateConfirmed' : 'confirmed';
-  banner(s, { kind: 'store', from: 'Silver Lane', text: late
+  banner(s, { kind: 'store', from: 'Quirksmith', text: late
     ? `Good news: your payment came through. Order ${ORDER_ID} is confirmed.`
     : `Payment received. Order ${ORDER_ID} confirmed.` });
-  mark(s, late ? 'Late capture' : (missed() ? 'Cron found it' : 'Captured'), 'ok');
+  mark(s, late ? 'Late capture' : 'Captured', 'ok');
 }
 
 /* ================= Script ================= */
 function buildSteps(sc) {
-  const S = [], A = after();
+  const S = [];
   const add = (t, title, run, opt = {}) => S.push({ t, title, run, ...opt });
 
   add(T(10, 0, 2), 'The shopper likes the silver ring and taps “Add to cart”.',
@@ -526,15 +571,11 @@ function buildSteps(sc) {
   add(T(10, 0, 17), 'The bank debits ₹2,499 and an SMS arrives. As far as the shopper is concerned, they have paid…', s => {
     banner(s, { kind: 'sms', from: 'DM-DEMOBK', text: `₹2,499 debited from A/c XX1234 for UPI txn. Ref ${UPI_REF}. Not you? Call 1800-000-0000.` });
   });
-  add(T(10, 0, 20), A
-      ? '…but Razorpay only says “pending”. The store shows an honest pending screen with a time promise, and locks Pay so they can’t pay twice.'
-      : '…but Razorpay only says “pending”. Today the store just shows a spinner, and the Retry button stays live: a double-payment risk.', s => {
+  add(T(10, 0, 20), '…but Razorpay only says “pending”. The store shows an honest pending screen with a time promise, and locks Pay so they can’t pay twice.', s => {
     log(s, 'RAZORPAY', 'Razorpay: payment pending');
-    s.phone.upi = null; s.phone.screen = 'status'; s.phone.status = A ? 'pending' : 'processing';
-    if (A) { s.phone.pay = 'locked'; log(s, 'ORDER', `Pay button locked for ${ORDER_ID} while payment is pending`, 'muted'); }
+    s.phone.upi = null; s.phone.screen = 'status'; s.phone.status = 'pending';
+    s.phone.pay = 'locked'; log(s, 'ORDER', `Pay button locked for ${ORDER_ID} while payment is pending`, 'muted');
   }, { dwell: 3400 });
-
-  if (!A) return buildBefore(sc, S, add);
 
   add(T(10, 1, 30), 'They tap “Yes, it was debited”. A ticket is auto-created with every detail filled in, and agent Priya is assigned.', s => {
     s.ticket = { status: 'open', created: s.t, thread: [] };
@@ -551,25 +592,13 @@ function buildSteps(sc) {
 
   if (sc === 'A') {
     cron(T(10, 15)); cron(T(10, 30));
-    if (!missed()) {
-      add(T(10, 40, 0), '10:40: the bank confirms. Razorpay’s webhook sends payment.authorized…', s => {
-        log(s, 'RAZORPAY', 'Razorpay webhook: payment.authorized');
-      });
-      add(T(10, 40, 3), '…then payment.captured. The order is confirmed, the ticket closes itself, and the shopper gets a notification.', s => {
-        log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
-        confirmOrder(s, false);
-      }, { dwell: 3400 });
-    } else {
-      add(T(10, 40, 0), '10:40: Razorpay captures the payment, but the webhook to the store fails. The store doesn’t know yet.', s => {
-        log(s, 'RAZORPAY', 'payment.captured at Razorpay · webhook delivery failed (simulated)', 'warn');
-        mark(s, 'Webhook lost', 'warn');
-      });
-      add(T(10, 45, 0), '10:45: the safety-net check asks Razorpay directly, finds the capture, and places the order. Only 5 minutes lost.', s => {
-        s.cronHit = s.t;
-        log(s, 'CRON', 'Cron: Razorpay says captured → order placed', 'ok');
-        confirmOrder(s, false);
-      }, { dwell: 3400 });
-    }
+    add(T(10, 40, 0), '10:40: the bank confirms. Razorpay’s webhook sends payment.authorized…', s => {
+      log(s, 'RAZORPAY', 'Razorpay webhook: payment.authorized');
+    });
+    add(T(10, 40, 3), '…then payment.captured. The order is confirmed, the ticket closes itself, and the shopper gets a notification.', s => {
+      log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
+      confirmOrder(s, false);
+    }, { dwell: 3400 });
   } else {
     for (let m = 15; m < 120; m += 15) cron(START + m * 60);
     add(DEADLINE, '12:00: two hours are up and the money hasn’t reached the store. The shopper gets an honest update. Nothing is refunded, because the store never received the money; the ticket stays open.', s => {
@@ -580,7 +609,7 @@ function buildSteps(sc) {
       say(s, 'Priya', 'We haven’t received your payment yet. If it reaches us, we’ll place your order and tell you here. If it failed, your bank returns the money within 5 days. This ticket stays open until then.', 2);
       log(s, 'NOTIFY', 'Customer notified: push + SMS + ticket thread (“haven’t received it yet”)', '', 3);
       s.phone.status = 'notConfirmed';
-      banner(s, { kind: 'store', from: 'Silver Lane', text: 'We haven’t received your payment yet. If it reaches us, we’ll place your order.' });
+      banner(s, { kind: 'store', from: 'Quirksmith', text: 'We haven’t received your payment yet. If it reaches us, we’ll place your order.' });
     }, { dwell: 4400 });
     for (let m = 135; m <= 180; m += 15) cron(START + m * 60);
 
@@ -610,7 +639,7 @@ function buildSteps(sc) {
         log(s, 'TICKET', 'T+5 reached, ticket auto-closed', '', 1);
         log(s, 'NOTIFY', 'Customer notified: push + SMS + ticket thread (“bank should have returned it”)', '', 2);
         s.phone.status = 'failedClosed'; s.phone.pay = 'again';
-        banner(s, { kind: 'store', from: 'Silver Lane', text: `Your bank should have returned ${AMT} to your account by now.` });
+        banner(s, { kind: 'store', from: 'Quirksmith', text: `Your bank should have returned ${AMT} to your account by now.` });
         mark(s, 'T+5 closed', 'bad');
       }, { dwell: 4400 });
     }
@@ -619,59 +648,10 @@ function buildSteps(sc) {
   return S;
 }
 
-function buildBefore(sc, S, add) {
-  add(T(10, 15, 0), '10:15: today’s rule auto-cancels any order still unpaid after 15 minutes, even though the money has left the shopper’s account.', s => {
-    log(s, 'ORDER', `Auto-cancel rule: unpaid after 15 min → ${ORDER_ID} CANCELLED`, 'err');
-    s.order.status = 'cancelled'; s.order.flash = true;
-    s.phone.status = 'cancelled';
-    banner(s, { kind: 'store', from: 'Silver Lane', text: `Your order ${ORDER_ID} has been cancelled. Payment not received.` });
-    mark(s, 'Auto-cancel', 'bad');
-  }, { dwell: 3400 });
-  const PT = sc === 'A' ? T(10, 40) : sc === 'B1' ? T(13, 10) : null;
-  if (PT && missed()) {
-    add(PT, `${hm(PT)}: Razorpay captures the payment but the webhook fails, and nothing re-checks. The store never finds out.`, s => {
-      log(s, 'RAZORPAY', 'payment.captured at Razorpay · webhook delivery failed (simulated)', 'warn');
-      log(s, 'ORDER', 'No safety-net check exists → store never learns about this payment', 'err', 1);
-      mark(s, 'Lost', 'bad');
-    }, { dwell: 3400 });
-  } else if (PT) {
-    add(PT, `${hm(PT)}: the payment is captured, but the order is already cancelled. ₹2,499 is now unmatched money, and the shopper still only sees “Order cancelled”.`, s => {
-      log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
-      log(s, 'ORDER', 'No matching active order: money unmatched', 'err', 1);
-      s.order.unmatched = true; s.order.flash = true;
-      mark(s, 'Unmatched', 'bad');
-    }, { dwell: 3600 });
-  } else {
-    add(WINDOW_END, 'Day 3: Razorpay’s capture window ends. The store isn’t watching, and the shopper hasn’t heard a word since “Order cancelled”.', s => {
-      log(s, 'RAZORPAY', 'Razorpay capture window ended, no payment captured (no one watching this order)', 'muted');
-      mark(s, 'Window ends', 'warn');
-    }, { dwell: 3200 });
-    add(T5, 'Day 5: still silence. Nobody ever told the shopper where their ₹2,499 went or who to ask.', s => {
-      mark(s, 'Silence', 'bad');
-    }, { dwell: 3200 });
-  }
-  add(S[S.length - 1].t + 20, 'Done. See the outcome summary on the right. Switch View to “After (fix)” to compare.', s => { s.outcome = outcomeFor(sc); });
-  return S;
-}
-
 function outcomeFor(sc) {
-  if (!after()) {
-    if (sc === 'B2') return { good: false, h: 'Before: debited, cancelled, and left in the dark',
-      p: 'The order was cancelled at 10:15 while the money had already left the shopper’s account.',
-      li: ['No pending explanation, no time promise', 'No way to raise a ticket from the order page', 'Never told what happened to the ₹2,499'] };
-    if (missed()) return { good: false, h: 'Before: the payment is lost to the store',
-      p: 'The webhook failed and nothing re-checks Razorpay, so the captured payment is never matched.',
-      li: ['Order cancelled at 10:15', '₹2,499 captured but invisible to the store', 'Shopper sees “Order cancelled” with no help option'] };
-    return { good: false, h: 'Before: ₹2,499 captured, order cancelled, money unmatched',
-      p: `The order auto-cancelled at 10:15. When the payment was captured at ${sc === 'A' ? '10:40' : '13:10'} there was nothing to attach it to.`,
-      li: ['Needs manual reconciliation', 'Retry button stayed live: double-payment risk', 'Shopper sees “Order cancelled” with no help option'] };
-  }
-  if (sc === 'A' && !missed()) return { good: true, h: 'Order confirmed at 10:40',
+  if (sc === 'A') return { good: true, h: 'Order confirmed at 10:40',
     p: 'The late payment was matched to the still-open order as soon as Razorpay confirmed it.',
     li: ['Pay was locked the whole time: no double payment', 'Ticket opened in one tap and closed itself', 'Shopper told what was happening at every step'] };
-  if (sc === 'A') return { good: true, h: 'The safety net caught a missed webhook',
-    p: 'The webhook never arrived, but the 10:45 check asked Razorpay directly and placed the order.',
-    li: ['5 minutes lost instead of a lost order', 'No manual reconciliation', 'Ticket closed and shopper notified automatically'] };
   if (sc === 'B1') return { good: true, h: 'A late payment still became an order',
     p: 'At 12:00 the shopper got an honest “not received yet” update and the ticket stayed open. When the money landed at 13:10 it was matched to SL-10482.',
     li: ['No refund promised for money the store never had', 'Ticket updated, then closed', 'No manual reconciliation'] };
@@ -751,7 +731,7 @@ async function run(sc) {
     }
     await advanceTo(step.t, alive); if (!alive()) return;
     st.t = step.t; step.run(st); st.title = step.title; stepIdx++; st.no = stepIdx;
-    if (step.tap === 'debitedYes' || (step.tap === 'pin' && !after())) ptr.classList.remove('show');
+    if (step.tap === 'debitedYes') ptr.classList.remove('show');
     renderAll();
     await sleep((step.dwell || DWELL) * DWELL_K[cfg.speed]);
   }
@@ -776,11 +756,7 @@ function renderCards() {
 }
 
 function renderOpts() {
-  document.querySelectorAll('#modeSeg button').forEach(b => b.classList.toggle('on', b.dataset.mode === cfg.mode));
   document.querySelectorAll('#spSeg button').forEach(b => b.classList.toggle('on', +b.dataset.sp === cfg.speed));
-  const ok = scenario === 'A' || scenario === null;
-  $('whToggle').classList.toggle('disabled', !ok); $('whMissed').disabled = !ok; $('whMissed').checked = cfg.webhookMissed && ok;
-  $('modePill').innerHTML = `<span class="chip ${after() ? 'open' : 'failed'}">${after() ? 'After · with the fix' : 'Before · today’s behaviour'}</span>`;
 }
 
 function renderNow() {
@@ -814,7 +790,7 @@ function renderClock() {
 
 function renderSkip() {
   $('skipLayer').innerHTML = st.skipping
-    ? `<div class="skip-ov"><div><span>⏩ Skipping ahead</span><b id="skipDay">${dhm(st.t)}</b><span>${after() ? 'cron still checking every 15 min' : 'nobody is watching this order'}</span></div></div>` : '';
+    ? `<div class="skip-ov"><div><span>⏩ Skipping ahead</span><b id="skipDay">${dhm(st.t)}</b><span>cron still checking every 15 min</span></div></div>` : '';
   $('beDay').classList.toggle('skipping', st.skipping);
 }
 
@@ -839,14 +815,14 @@ function renderBackend() {
   const segs = tlSegs(), first = segs[0], P = t => tlPos(t).toFixed(2) + '%';
   let tl = '<div class="tl-line"></div><div class="tl-fill" id="tlFill"></div>';
   for (let t = first[0]; t <= first[1]; t += 900) {
-    if (after() && t > START) tl += `<div class="tl-tick${t <= START + cronCount(st) * 900 ? ' ran' : ''}" style="left:${P(t)}"></div>`;
+    if (t > START) tl += `<div class="tl-tick${t <= START + cronCount(st) * 900 ? ' ran' : ''}" style="left:${P(t)}"></div>`;
     if ((t - START) % 3600 === 0 || (segs.length === 1 && (t - START) % 1800 === 0)) tl += `<div class="tl-lab" style="left:${P(t)}">${hm(t)}</div>`;
   }
   if (segs.length > 1) {
     tl += `<div class="tl-brk" style="left:${P(segs[1][0] + 1)}"></div>`;
     for (let d = 1; d <= 5; d++) tl += `<div class="tl-lab d" style="left:${P(T(10, 0, 0, d))}">Day ${d}</div>`;
   }
-  if (after()) tl += `<div class="tl-mark deadline" style="left:${P(DEADLINE)}">2-hr promise</div>`;
+  tl += `<div class="tl-mark deadline" style="left:${P(DEADLINE)}">2-hr promise</div>`;
   st.marks.forEach(m => { tl += `<div class="tl-mark ${m.kind}" style="left:${P(m.t)}">${m.label}</div>`; });
   tl += '<div class="tl-cur" id="tlCur"></div>';
   $('tl').innerHTML = tl;
@@ -870,14 +846,6 @@ function renderBackend() {
   $('logList').innerHTML = logs.length ? logs.map(l => `<div class="lrow ${l.kind}${l.id > lastSeenLog ? ' new' : ''}"><span class="lt">D${dayOf(l.t)} ${hms(l.t)}</span><span class="src ${l.src}">${l.src}</span><span class="msg">${l.msg}</span></div>`).join('')
     : '<div class="empty">Waiting for events…</div>';
   lastSeenLog = logSeq; $('logList').scrollTop = 0;
-
-  if (!after()) {
-    $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net check</h4></div>
-      <div class="rule bad">None today. If a Razorpay webhook is late or lost, nothing re-checks the payment.</div>
-      <div class="rule">Rule in place: auto-cancel any order unpaid after 15 minutes.</div>`;
-    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Support ticket</h4></div><div class="rule bad">No ticket. Today the order page has no way for the shopper to report a debit, so support only hears about it when they call or email.</div>`;
-    return;
-  }
 
   $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net cron</h4><span class="sub">every 15 min</span></div>
     <div class="cron-stats"><div>Runs so far<b id="cronCount">0</b></div><div>Next run<b id="cronNext">—</b></div><div>Watching<b>${cronWatching(st) ? ORDER_ID : '—'}</b></div></div>
@@ -928,15 +896,6 @@ function statusScreen() {
   const s = st.phone.status;
   const track = n => `<div class="track"><b>Placed</b><i class="${n >= 1 ? 'd' : ''}"></i><b>Payment</b><i class="${n >= 2 ? 'd' : ''}"></i><b>Confirmed</b></div>`;
   let out = `<div class="ordhead"><h2>Order ${ORDER_ID}</h2><span>${AMT} · UPI</span></div>`;
-  if (s === 'processing') {
-    return out + `<div class="state neutral" style="text-align:center;padding:26px 16px"><div class="spin br"></div>
-      <h3>Processing your payment…</h3><p>Please don’t press back or close the app.</p></div>
-      <button class="btn primary">Retry payment · ₹2,499</button>`;
-  }
-  if (s === 'cancelled') {
-    return out + `<div class="state bad"><div class="sic">${ICON.x}</div><h3>Order cancelled</h3><p>We didn’t receive your payment.</p></div>
-      <button class="btn secondary">Continue shopping</button>`;
-  }
   if (s === 'pending') {
     out += `<div class="state pending"><div class="sic">${ICON.clock}</div>
       <h3>Payment pending: we’re confirming with your bank.</h3>
@@ -997,7 +956,7 @@ function renderUpi(still) {
     : `<div class="proc"><div class="spin"></div><div style="font-weight:600;color:#1C2433">Processing payment</div><div class="from">Waiting for your bank…</div></div>`;
   el.innerHTML = `<div class="upi-wrap"${still ? ' style="animation:none"' : ''}><div class="upi${still || p.upi === 'processing' ? ' static' : ''}">
     <div class="uhead"><span class="ulogo">UPI</span>UPI app <span style="margin-left:auto;font-weight:500;color:#7A8394;font-size:12px">Secure</span></div>
-    <div class="payee">Paying <b>Silver Lane (demo store)</b></div>
+    <div class="payee">Paying <b>Quirksmith</b></div>
     <div class="amt">₹2,499.00</div>
     <div class="from">From Demo Bank · A/c XX1234</div>
     ${body}</div></div>`;
@@ -1007,7 +966,7 @@ function renderBanner() {
   const b = st.banner, layer = $('bannerLayer');
   if (!b || b.id === shownBanner) return;
   shownBanner = b.id; clearTimeout(bannerTimer);
-  const ic = b.kind === 'sms' ? '<div class="bic sms">SMS</div>' : '<div class="bic store">S</div>';
+  const ic = b.kind === 'sms' ? '<div class="bic sms">SMS</div>' : '<div class="bic store">Q</div>';
   layer.innerHTML = `<div class="banner">${ic}<div style="flex:1;min-width:0"><div class="bt"><b>${b.kind === 'sms' ? 'Messages · ' + b.from : b.from}</b><span>now</span></div><div class="bx">${b.text}</div></div></div>`;
   bannerTimer = setTimeout(() => {
     const el = layer.firstElementChild; if (el) el.classList.add('out');
@@ -1028,28 +987,36 @@ $('scCards').addEventListener('click', e => {
   const c = e.target.closest('[data-sc]');
   if (c) run(c.dataset.sc);
 });
-$('modeSeg').addEventListener('click', e => {
-  const b = e.target.closest('[data-mode]'); if (!b || b.dataset.mode === cfg.mode) return;
-  cfg.mode = b.dataset.mode;
-  if (scenario) run(scenario); else { renderOpts(); renderBackend(); }
-});
 $('spSeg').addEventListener('click', e => {
   const b = e.target.closest('[data-sp]'); if (!b) return;
   cfg.speed = +b.dataset.sp; renderOpts();
 });
-$('whMissed').addEventListener('change', e => {
-  cfg.webhookMissed = e.target.checked;
-  run('A');
-});
 window.addEventListener('resize', fitPhone);
+
+/* ---------- Welcome pop-up ---------- */
+function closeWelcome() { const w = $('welcome'); if (w) w.remove(); }
+function syncWSpeed() {
+  document.querySelectorAll('#wSpeed button').forEach(b => b.classList.toggle('on', +b.dataset.sp === cfg.speed));
+}
+$('wClose').addEventListener('click', closeWelcome);
+$('wGo').addEventListener('click', closeWelcome);
+$('welcome').addEventListener('click', e => { if (e.target.id === 'welcome') closeWelcome(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWelcome(); });
+$('wSpeed').addEventListener('click', e => {
+  const b = e.target.closest('[data-sp]'); if (!b) return;
+  cfg.speed = +b.dataset.sp; renderOpts(); syncWSpeed();
+  document.querySelector('#wSpeed .try')?.classList.remove('try');
+  const n = $('wNote'); n.className = 'note ok';
+  n.textContent = `Speed set to ${cfg.speed}×. You can change it again from the Speed box on the left.`;
+});
+document.querySelectorAll('[data-wsc]').forEach(b => b.addEventListener('click', () => { closeWelcome(); run(b.dataset.wsc); }));
+syncWSpeed();
 
 st = initState(); ptrPark();
 const q = new URLSearchParams(location.search);
-if (q.get('m') === 'before') cfg.mode = 'before';
-if (q.get('missed') === '1') cfg.webhookMissed = true;
 renderAll(); fitPhone();
 const qs = (q.get('s') || '').toUpperCase();
-if (SCENARIOS[qs]) run(qs);
+if (SCENARIOS[qs]) { closeWelcome(); run(qs); }
 })();
 </script>
 </body>
