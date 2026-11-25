@@ -12,16 +12,13 @@ It is one self-contained `index.html` (HTML + CSS + vanilla JS, Google Fonts onl
 
 **GitHub Pages:** Settings → Pages → Source: *Deploy from a branch* → `main` / `/ (root)`. The site appears at `https://<user>.github.io/hevo-pending-payment/`.
 
-## Controls
-| Control | What it does |
-|---|---|
-| Scenario A / B / C | A: payment lands at 10:40 · B: no payment by 12:00 · C: payment lands at 13:10, after the refund message |
-| Webhook missed | Scenario A only: the webhook never arrives, the 10:45 cron finds the capture |
-| Before / After | Today's behaviour (auto-cancel at 10:15, unmatched money) vs. the fix |
-| Play / Next step | Auto-advance, or step through manually while presenting |
-| Speed 1× / 5× / 20× | 1, 5 or 20 simulated minutes per real second |
-| Reset | Start the scenario again |
+## How it works
+Pick **A**, **B** or **C** from the cards on the left. Everything else plays by itself: a virtual pointer acts as the shopper (Add to cart, Pay with UPI, PIN, "Yes, it was debited"), and the phone and backend advance together on one simulated clock.
 
-Keyboard: `Space` play/pause · `→` next step · `R` reset. You can also tap the pulsing button on the phone to act as the shopper (any 4–6 digit PIN works).
+| Scenario | What happens | Runtime |
+|---|---|---|
+| A · Payment arrives late, within 2 hours | Captured at 10:40 → order confirmed, ticket closes itself | ~45 s |
+| B · No payment by the 2-hour mark | 12:00 → "money back in 3–5 days", Pay unlocked | ~65 s |
+| C · Payment arrives after 2 hours | Refund message at 12:00, captured at 13:10 → order confirmed anyway | ~85 s |
 
-Direct links: `?s=C&m=before`, `?s=A&missed=1`.
+Click a card again to replay. Direct link that auto-starts a scenario: `?s=B`.

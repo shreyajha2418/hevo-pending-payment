@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paid, But No Order</title>
-<meta name="description" content="Clickable split-screen simulation of a pending UPI payment: the shopper's phone on the left, the store backend on the right. Illustrative prototype, all data simulated.">
+<meta name="description" content="Self-playing split-screen simulation of a pending UPI payment: the shopper's phone on the left, the store backend on the right. Illustrative prototype, all data simulated.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -22,52 +22,52 @@ button{font:inherit;cursor:pointer}
 h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0;font-weight:600}
 .tnum{font-variant-numeric:tabular-nums}
 
-/* ---------- Top bar ---------- */
-.topbar{display:flex;align-items:center;gap:14px;padding:10px 20px;background:var(--card);border-bottom:1px solid var(--line);flex-wrap:wrap}
-.brand{display:flex;flex-direction:column;margin-right:6px}
-.brand h1{font-size:22px;line-height:1}
-.brand span{font-size:11px;color:var(--muted);letter-spacing:.04em}
-.ctl{display:flex;align-items:center;gap:8px}
-.ctl-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.seg{display:inline-flex;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
-.seg button{border:0;background:transparent;color:var(--body);padding:6px 11px;border-radius:7px;font-size:13px;font-weight:500;white-space:nowrap}
-.seg button:hover{color:var(--ink)}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(43,37,34,.12);font-weight:600}
-.seg.mode button.on[data-mode=before]{background:var(--alert);color:#fff}
-.seg.mode button.on[data-mode=after]{background:var(--accent);color:#fff}
-.seg button small{color:var(--muted);font-weight:400;margin-left:4px}
-.seg button.on small{color:inherit;opacity:.75}
-.tbtn{border:1px solid var(--line-2);background:var(--card);color:var(--ink);padding:7px 13px;border-radius:9px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
-.tbtn:hover{border-color:var(--accent)}
-.tbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.tbtn.primary:hover{background:#774C34}
-.tbtn:disabled{opacity:.45;cursor:not-allowed}
-.toggle{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);cursor:pointer;user-select:none}
-.toggle input{display:none}
-.toggle .sw{width:32px;height:18px;border-radius:999px;background:var(--line-2);position:relative;transition:.2s}
-.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
-.toggle input:checked + .sw{background:var(--accent)}
-.toggle input:checked + .sw::after{left:16px}
-.toggle.disabled{opacity:.4;cursor:not-allowed}
-.spacer{flex:1}
-
-/* ---------- Narration ---------- */
-.narr{display:flex;align-items:center;gap:14px;padding:9px 20px;border-bottom:1px solid var(--line);background:#F6F0EC;min-height:44px}
-.narr .stepno{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
-.narr .text{color:var(--ink);font-size:15px;flex:1}
-.narr .hint{font-size:12px;color:var(--muted);white-space:nowrap}
-.narr .bar{height:4px;width:140px;background:var(--line);border-radius:4px;overflow:hidden}
-.narr .bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+/* ---------- Header ---------- */
+.topbar{display:flex;align-items:baseline;gap:14px;padding:12px 20px 10px;border-bottom:1px solid var(--line);background:var(--card)}
+.topbar h1{font-size:26px;line-height:1}
+.topbar span{font-size:13px;color:var(--muted)}
 
 /* ---------- Main ---------- */
-main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20px 8px;min-height:0}
+main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px;padding:14px 20px 6px;min-height:0}
 .col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* ---------- Scenario column ---------- */
+.sc-col{display:flex;flex-direction:column;gap:10px;min-height:0;overflow-y:auto}
+.sc-intro{font-size:12.5px;color:var(--body);margin:-2px 0 2px}
+.sc-card{position:relative;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:11px 13px;color:var(--body);transition:border-color .2s,box-shadow .2s,transform .15s;overflow:hidden}
+.sc-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.sc-card.idle-pulse{animation:cardpulse 2.4s infinite}
+.sc-card.idle-pulse:nth-child(2){animation-delay:.3s}.sc-card.idle-pulse:nth-child(3){animation-delay:.6s}
+@keyframes cardpulse{0%,100%{box-shadow:0 0 0 0 rgba(138,90,63,0)}50%{box-shadow:0 0 0 4px rgba(138,90,63,.18)}}
+.sc-card.on{border-color:var(--accent);background:#fff;box-shadow:0 6px 18px -10px rgba(138,90,63,.6)}
+.sc-top{display:flex;align-items:center;gap:10px}
+.sc-letter{width:34px;height:34px;border-radius:10px;background:var(--soft);color:var(--accent);font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;border:1px solid var(--line)}
+.sc-card.on .sc-letter{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sc-title{font-weight:700;color:var(--ink);font-size:14px;line-height:1.25;flex:1;min-width:0}
+.sc-desc{font-size:12.5px;margin:6px 0 0;line-height:1.38}
+.sc-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sc-meta span{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--body)}
+.sc-meta span.ok{background:var(--ok-bg);color:var(--ok)}
+.sc-meta span.bad{background:var(--alert-bg);color:var(--alert)}
+.sc-state{margin-left:auto;align-self:flex-start;white-space:nowrap;padding-top:2px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sc-card.on .sc-state{color:var(--accent)}
+.sc-prog{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);width:0;transition:width .4s}
+
+.now{background:var(--ink);color:#EFE7E2;border-radius:14px;padding:14px 15px;margin-top:2px}
+.now .nl{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#BFAFA6}
+.now .nt{font-size:14.5px;line-height:1.4;margin-top:6px;color:#fff;min-height:80px}
+.now .nbar{height:3px;background:#4A403B;border-radius:3px;margin-top:10px;overflow:hidden}
+.now .nbar i{display:block;height:100%;width:0;background:#D9B79F;transition:width .4s}
+.legend{font-size:11.5px;color:var(--muted);line-height:1.5;padding:0 2px}
+.legend b{color:var(--body);font-weight:600}
+
+/* ---------- Phone ---------- */
 .phone-col{display:flex;flex-direction:column;align-items:center;min-height:0}
 .phone-col .col-label{width:100%}
 .phone-holder{flex:1;min-height:0;width:100%;display:flex;justify-content:center}
 .phone-scale{position:relative}
 .phone{width:390px;height:800px;background:#1E1A18;border-radius:52px;padding:12px;box-shadow:0 24px 50px -18px rgba(43,37,34,.45),inset 0 0 0 2px #3A3330;transform-origin:top left;position:absolute;top:0;left:0}
-.screen{width:100%;height:100%;border-radius:40px;background:var(--card);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.screen{width:100%;height:100%;border-radius:40px;background:var(--card);overflow:hidden;position:relative;display:flex;flex-direction:column;pointer-events:none;user-select:none}
 .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:110px;height:30px;background:#1E1A18;border-radius:20px;z-index:30}
 .sbar{height:48px;display:flex;justify-content:space-between;align-items:center;padding:6px 30px 0;font-size:14px;font-weight:600;color:var(--ink);flex:none}
 .sbar .icons{display:flex;gap:5px;align-items:center}
@@ -75,18 +75,22 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 .appbar .logo{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--ink);letter-spacing:.02em}
 .appbar .logo small{font-family:var(--sans);font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.02em;margin-left:4px}
 .appbar .ic{color:var(--ink);display:flex;gap:14px}
-.sbody{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
-.sbody::-webkit-scrollbar{display:none}
+.sbody{flex:1;overflow:hidden}
 .pad{padding:16px 18px}
-.btn{display:block;width:100%;border:0;border-radius:12px;padding:14px;font-size:15px;font-weight:600;text-align:center;transition:transform .1s}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:14px;font-size:15px;font-weight:600;text-align:center;transition:transform .12s,filter .12s}
 .btn.primary{background:var(--accent);color:#fff}
 .btn.secondary{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
-.btn:disabled{background:#D9CFC9;color:#8F837D;cursor:not-allowed}
-.btn:active:not(:disabled){transform:scale(.98)}
-[data-tap].hint{animation:pulse 1.6s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(138,90,63,.55)}70%{box-shadow:0 0 0 10px rgba(138,90,63,0)}100%{box-shadow:0 0 0 0 rgba(138,90,63,0)}}
-[data-tap].tapping{transform:scale(.96);filter:brightness(.9)}
+.btn:disabled{background:#D9CFC9;color:#8F837D}
+.pressed{transform:scale(.95)!important;filter:brightness(.88)}
 .cta-bar{padding:14px 18px 22px;border-top:1px solid var(--line);background:var(--card);flex:none}
+
+/* virtual pointer */
+.ptr{position:absolute;top:0;left:0;z-index:100;pointer-events:none;opacity:0;transition:transform .75s cubic-bezier(.45,.05,.25,1),opacity .3s;will-change:transform}
+.ptr.show{opacity:1}
+.ptr svg{display:block;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35));transform-origin:3px 3px;transition:transform .12s}
+.ptr.down svg{transform:scale(.82)}
+.ripple{position:absolute;z-index:99;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:3px solid var(--accent);pointer-events:none;animation:ripple .55s ease-out forwards}
+@keyframes ripple{from{transform:scale(.4);opacity:1}to{transform:scale(3.2);opacity:0}}
 
 /* product */
 .hero{height:300px;background:linear-gradient(160deg,#F3ECE7,#E6DBD4);display:flex;align-items:center;justify-content:center;position:relative}
@@ -116,27 +120,23 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 /* UPI sheet */
 .upi-wrap{position:absolute;inset:0;background:rgba(20,16,14,.45);z-index:20;display:flex;align-items:flex-end;animation:fade .25s}
 @keyframes fade{from{opacity:0}}
-.upi{width:100%;background:#fff;border-radius:26px 26px 0 0;padding:18px 20px 26px;animation:up .3s cubic-bezier(.2,.8,.2,1);font-family:var(--sans)}
+.upi{width:100%;background:#fff;border-radius:26px 26px 0 0;padding:18px 20px 26px;animation:up .3s cubic-bezier(.2,.8,.2,1)}
+.upi.static{animation:none}
 @keyframes up{from{transform:translateY(100%)}}
 .upi .uhead{display:flex;align-items:center;gap:8px;font-weight:700;color:#23324A;font-size:14px}
-.upi .ulogo{width:26px;height:26px;border-radius:7px;background:#2E4A7A;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;letter-spacing:.02em}
+.upi .ulogo{width:26px;height:26px;border-radius:7px;background:#2E4A7A;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .upi .payee{margin-top:14px;font-size:13px;color:#5B6475}
-.upi .amt{font-size:32px;font-weight:700;color:#1C2433;margin:2px 0 2px}
+.upi .amt{font-size:32px;font-weight:700;color:#1C2433;margin:2px 0}
 .upi .from{font-size:12px;color:#7A8394}
 .upi .pinlbl{margin-top:16px;font-size:12px;font-weight:600;color:#3B4558;text-align:center}
 .dots{display:flex;justify-content:center;gap:12px;margin:10px 0 14px}
 .dots i{width:14px;height:14px;border-radius:50%;border:2px solid #9AA3B3}
 .dots i.f{background:#2E4A7A;border-color:#2E4A7A}
-.dots.shake{animation:shake .35s}
-@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.keys button{border:0;background:#F1F3F7;border-radius:10px;height:46px;font-size:19px;font-weight:600;color:#1C2433}
-.keys button:hover{background:#E5E9F0}
+.keys button{border:0;background:#F1F3F7;border-radius:10px;height:46px;font-size:19px;font-weight:600;color:#1C2433;transition:transform .12s,filter .12s}
 .keys button.go{background:#2E4A7A;color:#fff;font-size:15px}
-.keys button.go:disabled{opacity:.4}
 .proc{text-align:center;padding:26px 0 18px}
 .spin{width:44px;height:44px;border-radius:50%;border:4px solid #DCE2EC;border-top-color:#2E4A7A;margin:0 auto 14px;animation:rot 1s linear infinite}
-.spin.br{border-color:#EADFD8;border-top-color:var(--accent)}
 @keyframes rot{to{transform:rotate(360deg)}}
 
 /* Notification banner */
@@ -165,7 +165,6 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 .state.ok .sic{background:#C6DCC9;color:var(--ok)}
 .state.bad{background:var(--alert-bg);border-color:#EBC5BF}
 .state.bad .sic{background:#EBC5BF;color:var(--alert)}
-.state.neutral{background:var(--soft);border-color:var(--line)}
 .promise{display:flex;gap:6px;align-items:center;font-weight:600;color:var(--warn)}
 .track{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:11px;color:var(--muted)}
 .track i{flex:1;height:3px;border-radius:3px;background:var(--line-2)}
@@ -176,7 +175,7 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 .card-p{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;margin-top:14px}
 .card-p h4{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--ink)}
 .yn{display:flex;gap:8px;margin-top:10px}
-.yn button{flex:1;padding:11px;border-radius:10px;font-weight:600;font-size:14px;border:1px solid var(--line-2);background:var(--card);color:var(--ink)}
+.yn button{flex:1;padding:11px;border-radius:10px;font-weight:600;font-size:14px;border:1px solid var(--line-2);background:var(--card);color:var(--ink);transition:transform .12s,filter .12s}
 .yn button.y{background:var(--ink);color:#fff;border-color:var(--ink)}
 .small{font-size:12px;color:var(--muted)}
 .tk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
@@ -185,25 +184,23 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 .kv div{font-size:11px;color:var(--muted)}
 .kv b{display:block;font-size:13px;color:var(--ink);font-weight:600}
 .thread{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-.bub{background:var(--soft);border-radius:12px 12px 12px 4px;padding:8px 10px;font-size:12.5px;color:var(--ink);animation:fade .4s}
+.bub{background:var(--soft);border-radius:12px 12px 12px 4px;padding:8px 10px;font-size:12.5px;color:var(--ink)}
 .bub.sys{background:transparent;border:1px dashed var(--line-2);color:var(--muted);border-radius:10px}
 .bub .who{font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:2px;display:flex;justify-content:space-between}
 .bub.new{background:#F3E6D3}
 .av{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex:none}
 
 /* chips */
-.chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap;transition:background .3s,color .3s}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
 .chip.awaiting{background:var(--warn-bg);color:var(--warn)}
 .chip.confirmed{background:var(--ok-bg);color:var(--ok)}
 .chip.refund{background:var(--alert-bg);color:var(--alert)}
-.chip.cancelled{background:#E7DFDA;color:#6E625C}
-.chip.unmatched{background:var(--alert);color:#fff}
 .chip.open{background:#EFE3DA;color:var(--accent)}
 .chip.closed{background:#E7DFDA;color:#6E625C}
 .chip.resolved{background:var(--ok-bg);color:var(--ok)}
 .chip.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .chip.flash{animation:flash 1.2s}
-@keyframes flash{0%,100%{box-shadow:0 0 0 0 transparent}30%{box-shadow:0 0 0 5px rgba(138,90,63,.25)}}
+@keyframes flash{30%{box-shadow:0 0 0 5px rgba(138,90,63,.25)}}
 
 /* ---------- Backend ---------- */
 .be{display:flex;flex-direction:column;min-height:0;min-width:0}
@@ -214,11 +211,8 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 .panel-h .sub{font-size:11px;color:var(--muted)}
 .be-top{display:flex;align-items:center;gap:16px}
 .be-top .tl{flex:1;min-width:0}
-.clock{font-size:30px;font-weight:700;color:var(--ink);letter-spacing:.01em;line-height:1}
+.clock{font-size:30px;font-weight:700;color:var(--ink);line-height:1}
 .clock-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
-.modepill{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
-.modepill.before{background:var(--alert);color:#fff}
-.modepill.after{background:var(--accent);color:#fff}
 
 .tl-track{position:relative;height:46px;margin:2px 8px 0}
 .tl-line{position:absolute;left:0;right:0;top:20px;height:4px;background:var(--line);border-radius:4px}
@@ -230,24 +224,21 @@ main{flex:1;display:grid;grid-template-columns:auto 1fr;gap:20px;padding:16px 20
 .tl-mark::after{content:"";position:absolute;left:50%;top:15px;width:2px;height:13px;transform:translateX(-1px);background:currentColor}
 .tl-mark.deadline{color:var(--ink);background:#E7DFDA}
 .tl-mark.ok{color:var(--ok);background:var(--ok-bg)}
-.tl-mark.bad{color:var(--alert);background:var(--alert-bg)}
-.tl-mark.warn{color:var(--warn);background:var(--warn-bg)}
 .tl-cur{position:absolute;top:13px;width:14px;height:18px;transform:translateX(-7px)}
 .tl-cur::before{content:"";position:absolute;left:3px;top:3px;width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--ink)}
 
 table.orders{width:100%;border-collapse:collapse;font-size:13px}
 table.orders th{text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:4px 8px 6px;border-bottom:1px solid var(--line)}
-table.orders td{padding:10px 8px;color:var(--ink);border-bottom:1px solid var(--line)}
-table.orders tr:last-child td{border-bottom:0}
+table.orders td{padding:10px 8px;color:var(--ink)}
 table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
-.empty{color:var(--muted);font-size:13px;padding:10px 8px;font-style:italic}
+.empty{color:var(--muted);font-size:13px;padding:8px;font-style:italic}
 
-.be-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:12px}
+.be-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px}
 .logp{display:flex;flex-direction:column;min-height:0}
 .loglist{flex:1;overflow-y:auto;min-height:0;margin:0 -6px}
-.lrow{display:grid;grid-template-columns:64px 74px 1fr;gap:8px;align-items:baseline;padding:6px 6px;border-radius:7px;font-size:12.5px;color:var(--ink)}
+.lrow{display:grid;grid-template-columns:60px 70px 1fr;gap:8px;align-items:baseline;padding:6px;border-radius:7px;font-size:12.5px;color:var(--ink)}
 .lrow+.lrow{border-top:1px solid #EFE7E2}
-.lrow .lt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--muted)}
+.lrow .lt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--muted)}
 .lrow .src{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-align:center;padding:2px 0;border-radius:4px;background:#EFE7E2;color:var(--body)}
 .src.ORDER{background:#EFE3DA;color:var(--accent)}
 .src.RAZORPAY{background:#E3E8F1;color:#33507E}
@@ -257,11 +248,9 @@ table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-
 .lrow.ok .msg{color:var(--ok);font-weight:600}
 .lrow.err{background:var(--alert-bg)}
 .lrow.err .msg{color:var(--alert);font-weight:700}
-.lrow.warn .msg{color:var(--warn);font-weight:600}
 .lrow.muted .msg{color:var(--muted)}
 .lrow.new{animation:newrow 1.6s}
 @keyframes newrow{from{background:#F3E6D3}}
-.lrow.err.new{animation:none}
 
 .side{display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto}
 .tk-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12px}
@@ -274,21 +263,15 @@ table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-
 .cron-stats b{display:block;font-size:16px;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
 .cron-runs{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
 .cron-runs span{font-size:10.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;padding:2px 6px;border-radius:5px;background:#EAE4F0;color:#5D4A7A}
-.cron-runs span.hit{background:var(--ok-bg);color:var(--ok);font-weight:700}
-.rule{font-size:12px;color:var(--body);background:var(--soft);border-radius:8px;padding:8px 10px;margin-top:6px}
-.rule.bad{background:var(--alert-bg);color:var(--alert)}
 
 .outcome{border-radius:14px;padding:12px 16px;display:flex;gap:14px;align-items:flex-start;animation:fade .5s}
 .outcome.good{background:var(--ok-bg);border:1px solid #C6DCC9}
-.outcome.bad{background:var(--alert-bg);border:1px solid #EBC5BF}
 .outcome h4{font-size:20px}
 .outcome p{margin:3px 0 0;font-size:13px;color:var(--ink)}
 .outcome ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;color:var(--body)}
 
-footer{display:flex;justify-content:space-between;padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
-footer kbd{font-family:var(--sans);font-size:10.5px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:4px;padding:0 5px;background:var(--card);color:var(--body)}
+footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
 
-@media (max-width:1560px){ .brand span{display:none} .seg button small{display:none} .topbar .ctl-label{display:none} }
 @media (max-width:1100px){
   body{overflow:auto;height:auto}
   main{grid-template-columns:1fr}
@@ -300,51 +283,27 @@ footer kbd{font-family:var(--sans);font-size:10.5px;border:1px solid var(--line-
 <body>
 
 <header class="topbar">
-  <div class="brand"><h1>Paid, but no order</h1><span>Pending UPI payment · simulation</span></div>
-
-  <div class="ctl"><span class="ctl-label">Scenario</span>
-    <div class="seg" id="scSeg">
-      <button data-sc="A" title="A: payment arrives late, within 2 hours">A <small>Late, &lt;2h</small></button>
-      <button data-sc="B" title="B: no payment by 2 hours">B <small>No payment</small></button>
-      <button data-sc="C" title="C: payment arrives after 2 hours">C <small>After 2h</small></button>
-    </div>
-  </div>
-
-  <label class="toggle" id="whToggle" title="Scenario A only: the Razorpay webhook never reaches the store">
-    <input type="checkbox" id="whMissed"><span class="sw"></span>Webhook missed
-  </label>
-
-  <div class="ctl"><span class="ctl-label">View</span>
-    <div class="seg mode" id="modeSeg">
-      <button data-mode="before">Before <small>today</small></button>
-      <button data-mode="after">After <small>our fix</small></button>
-    </div>
-  </div>
-
-  <div class="spacer"></div>
-
-  <div class="ctl">
-    <button class="tbtn primary" id="playBtn" style="min-width:86px"></button>
-    <button class="tbtn" id="nextBtn">Next step <span aria-hidden="true">→</span></button>
-  </div>
-  <div class="ctl"><span class="ctl-label">Speed</span>
-    <div class="seg" id="spSeg">
-      <button data-sp="1">1×</button><button data-sp="5">5×</button><button data-sp="20">20×</button>
-    </div>
-  </div>
-  <button class="tbtn" id="resetBtn">↺ Reset</button>
+  <h1>Paid, but no order</h1>
+  <span>What happens when a UPI payment is debited but stuck on “pending”, and how the store handles it</span>
 </header>
 
-<div class="narr">
-  <span class="stepno" id="stepNo"></span>
-  <span class="text" id="narrText"></span>
-  <span class="hint" id="narrHint"></span>
-  <span class="bar"><i id="narrBar"></i></span>
-</div>
-
 <main>
+  <!-- Scenario chooser -->
+  <section class="sc-col">
+    <div class="col-label" style="margin-bottom:0"><span>Choose a scenario</span></div>
+    <p class="sc-intro">Every scenario starts the same way: a shopper pays ₹2,499 by UPI at 10:00, the bank debits them, but the payment stays “pending”. Pick how it ends:</p>
+    <div id="scCards" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div class="now">
+      <div class="nl"><span id="nowStep">Waiting</span><span class="tnum" id="nowClock">10:00</span></div>
+      <div class="nt" id="nowText"></div>
+      <div class="nbar"><i id="nowBar"></i></div>
+    </div>
+    <p class="legend"><b>Left:</b> the shopper’s phone. The pointer plays the shopper. <b>Right:</b> what the store’s backend does at the same moment. Both run on one simulated clock, so nothing makes you wait in real time.</p>
+  </section>
+
+  <!-- Phone -->
   <section class="phone-col">
-    <div class="col-label"><span>Customer’s phone</span><span class="tnum" id="phoneClockLbl"></span></div>
+    <div class="col-label"><span>Customer’s phone</span></div>
     <div class="phone-holder" id="phoneHolder">
       <div class="phone-scale" id="phoneScale">
         <div class="phone" id="phone">
@@ -366,13 +325,15 @@ footer kbd{font-family:var(--sans);font-size:10.5px;border:1px solid var(--line-
             <div id="upiLayer"></div>
             <div id="bannerLayer"></div>
           </div>
+          <div class="ptr" id="ptr"><svg width="30" height="34" viewBox="0 0 30 34"><path d="M3 3 L3 27 L9.5 21 L14 31 L18.5 29 L14 19.5 L23 19.5 Z" fill="#fff" stroke="#1E1A18" stroke-width="2" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Backend -->
   <section class="be">
-    <div class="col-label"><span>Store backend · ops console</span><span id="modePill"></span></div>
+    <div class="col-label"><span>Store backend · ops console</span></div>
     <div class="be-body">
       <div class="panel be-top">
         <div>
@@ -381,14 +342,11 @@ footer kbd{font-family:var(--sans);font-size:10.5px;border:1px solid var(--line-
         </div>
         <div class="tl"><div class="tl-track" id="tl"></div></div>
       </div>
-
       <div class="panel">
         <div class="panel-h"><h4>Orders</h4><span class="sub">Silver Lane (demo store) · today</span></div>
         <div id="ordersBox"></div>
       </div>
-
       <div id="outcomeBox"></div>
-
       <div class="be-grid">
         <div class="panel logp">
           <div class="panel-h"><h4>Event log</h4><span class="sub">newest on top</span></div>
@@ -403,10 +361,7 @@ footer kbd{font-family:var(--sans);font-size:10.5px;border:1px solid var(--line-
   </section>
 </main>
 
-<footer>
-  <span><em>Illustrative prototype. All data simulated.</em> Silver Lane is a fictional store; no real payments, banks or APIs are used.</span>
-  <span><kbd>Space</kbd> play/pause · <kbd>→</kbd> next step · <kbd>R</kbd> reset · tap the pulsing button on the phone to act as the shopper</span>
-</footer>
+<footer><em>Illustrative prototype. All data simulated.</em> Silver Lane is a fictional store; no real payments, banks or APIs are used.</footer>
 
 <script>
 (() => {
@@ -418,17 +373,30 @@ const CUSTOMER = { name: 'Ananya Rao', phone: '+91 98765 43210' };
 const UPI_REF = '402188361175';
 const T = (h, m, s = 0) => h * 3600 + m * 60 + s;
 const START = T(10, 0, 0), DEADLINE = T(12, 0, 0);
-const RATE = { 1: 60, 5: 300, 20: 1200 };          // simulated seconds per real second
-const DWELL = { 1: 2600, 5: 1500, 20: 750 };       // real ms pause after each step while playing
+const RATE = 330;            // simulated seconds per real second (≈5.5 sim minutes / s)
+const DWELL = 2600;          // real ms to read each step
+const DWELL_CRON = 1300;     // routine cron checks go quicker
 const pad = n => String(n).padStart(2, '0');
 const hms = t => `${pad(Math.floor(t / 3600))}:${pad(Math.floor(t / 60) % 60)}:${pad(Math.floor(t) % 60)}`;
 const hm = t => `${pad(Math.floor(t / 3600))}:${pad(Math.floor(t / 60) % 60)}`;
 const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+const SCENARIOS = {
+  A: { title: 'Payment arrives late, within 2 hours',
+       desc: 'The bank confirms at 10:40. The order is confirmed, the ticket closes itself and the shopper is notified.',
+       meta: [['Pending 10:00'], ['Captured 10:40', 'ok']] },
+  B: { title: 'No payment by the 2-hour mark',
+       desc: 'Nothing arrives by 12:00. The shopper is told the money returns in 3–5 days, and Pay is unlocked again.',
+       meta: [['Pending 10:00'], ['Refund message 12:00', 'bad']] },
+  C: { title: 'Payment arrives after 2 hours',
+       desc: 'The shopper hears “money back in 3–5 days” at 12:00, then the payment lands at 13:10. The order is confirmed anyway.',
+       meta: [['Refund message 12:00', 'bad'], ['Captured 13:10', 'ok']] },
+};
 
 const ICON = {
   clock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5 9-10"/></svg>',
-  x: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></svg>',
   lock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
   shield: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/></svg>',
@@ -443,310 +411,241 @@ const RING = (w = 180) => `<svg width="${w}" height="${w}" viewBox="0 0 200 200"
   <circle cx="100" cy="56" r="15" fill="url(#gm)" stroke="#A29DAA" stroke-width="1.5"/>
   <path d="M93 52l7-6 7 6-7 10z" fill="#fff" opacity=".6"/></svg>`;
 
-/* ================= Config & state ================= */
-const cfg = { scenario: 'A', mode: 'after', webhookMissed: false, speed: 5 };
-let st, steps, stepIdx, playing = false, dwellUntil = 0, pendingTap = null, lastFrame = 0, logSeq = 0, lastSeenLog = 0, bannerTimer = null;
+/* ================= State ================= */
+let scenario = null, st, steps = [], stepIdx = 0, runId = 0, done = false;
+let logSeq = 0, lastSeenLog = 0, bannerTimer = null, shownBanner = null, phoneScale = 1;
 
 function initState() {
   logSeq = 0; lastSeenLog = 0;
   return {
-    t: START,
-    phone: { screen: 'product', upi: null, pin: '', status: null, noNote: false, shake: false },
-    order: null, ticket: null, logs: [], cronRuns: [], cronHit: null, marks: [],
-    banner: null, outcome: null, payLocked: false, payReenabled: false, title: null,
+    t: START, phone: { screen: 'product', upi: null, pin: '', status: null },
+    order: null, ticket: null, logs: [], cronRuns: [], marks: [],
+    banner: null, outcome: null, payLocked: false, title: null,
   };
 }
 
-/* ================= Helpers used by steps ================= */
+/* ================= Step helpers ================= */
 function log(s, src, msg, kind = '', off = 0) { s.logs.push({ id: ++logSeq, t: s.t + off, src, msg, kind }); }
-function banner(s, b) { s.banner = { ...b, id: Math.random(), t: s.t }; }
-function say(s, who, text, off = 0) { s.ticket.thread.push({ t: s.t + off, who, text, id: Math.random() }); }
-function mark(s, t, label, kind) { s.marks.push({ t, label, kind }); }
+function banner(s, b) { s.banner = { ...b, id: Math.random() }; }
+function say(s, who, text, off = 0) { s.ticket.thread.push({ t: s.t + off, who, text }); }
 
-function confirmOrder(s, via, late) {
+function confirmOrder(s, late) {
   s.order.status = 'confirmed'; s.order.flash = true; s.payLocked = false;
-  log(s, 'ORDER', late ? 'Late payment captured → order placed, customer updated'
-                       : `Order ${ORDER_ID}: AWAITING PAYMENT → CONFIRMED`, 'ok');
-  if (s.ticket) {
-    s.ticket.status = 'closed'; s.ticket.updated = late;
-    say(s, 'Priya', late
-      ? `Good news: your payment came through at ${hm(s.t)}. Order ${ORDER_ID} is confirmed, so there’s no refund to wait for. We’ll share tracking once it ships.`
-      : `Good news: your payment of ${AMT} is confirmed and order ${ORDER_ID} is placed. Closing this ticket. Reply here any time.`, 2);
-    log(s, 'TICKET', late ? `Ticket ${TICKET_ID} updated: late payment, order confirmed (closed)`
-                          : `Ticket ${TICKET_ID} → CLOSED (auto, payment confirmed)`, '', 2);
-  }
+  log(s, 'ORDER', late ? 'Late payment captured → order placed, customer updated' : `Order ${ORDER_ID}: AWAITING PAYMENT → CONFIRMED`, 'ok');
+  s.ticket.status = 'closed'; s.ticket.updated = late;
+  say(s, 'Priya', late
+    ? `Good news: your payment came through at ${hm(s.t)}. Order ${ORDER_ID} is confirmed, so there’s no refund to wait for. We’ll share tracking once it ships.`
+    : `Good news: your payment of ${AMT} is confirmed and order ${ORDER_ID} is placed. Closing this ticket. Reply here any time.`, 2);
+  log(s, 'TICKET', late ? `Ticket ${TICKET_ID} updated: late payment, order confirmed (closed)` : `Ticket ${TICKET_ID} → CLOSED (auto, payment confirmed)`, '', 2);
   log(s, 'NOTIFY', `Customer notified: push + SMS + ticket thread (“${late ? 'payment came through' : 'Payment received'}”)`, '', 3);
   s.phone.status = late ? 'lateConfirmed' : 'confirmed';
-  s.phone.screen = 'status'; s.phone.upi = null;
   banner(s, { kind: 'store', from: 'Silver Lane', text: late
     ? `Good news: your payment came through. Order ${ORDER_ID} is confirmed.`
     : `Payment received. Order ${ORDER_ID} confirmed.` });
-  mark(s, s.t, via === 'cron' ? 'Cron found it' : (late ? 'Late capture' : 'Captured'), 'ok');
+  s.marks.push({ t: s.t, label: late ? 'Late capture' : 'Captured', kind: 'ok' });
 }
 
-/* ================= Script builder ================= */
-function buildSteps() {
-  const after = cfg.mode === 'after', sc = cfg.scenario, missed = cfg.webhookMissed && sc === 'A';
+/* ================= Script ================= */
+function buildSteps(sc) {
   const S = [];
-  const add = (t, title, run, tap, cron) => S.push({ t, title, run, tap, cron });
+  const add = (t, title, run, opt = {}) => S.push({ t, title, run, ...opt });
 
-  // ---- Common start ----
   add(T(10, 0, 2), 'The shopper likes the silver ring and taps “Add to cart”.',
-    s => { s.phone.screen = 'cart'; }, 'addToCart');
+    s => { s.phone.screen = 'cart'; }, { tap: 'addToCart' });
   add(T(10, 0, 4), 'They tap “Pay with UPI”. The store creates order SL-10482 and hands off to the UPI app.', s => {
     s.order = { status: 'awaiting', created: s.t };
     log(s, 'ORDER', `Order ${ORDER_ID} created · ${AMT} · UPI`);
     log(s, 'RAZORPAY', 'Razorpay: payment created, collect request sent to UPI app', 'muted', 1);
     s.phone.upi = 'pin';
-  }, 'payUpi');
-  add(T(10, 0, 12), 'They enter their UPI PIN and approve the payment.', s => {
-    if (s.phone.pin.length < 4) s.phone.pin = '1234';
-    s.phone.upi = 'processing';
-  }, 'pinSubmit');
+  }, { tap: 'payUpi' });
+  add(T(10, 0, 12), 'They enter their UPI PIN and approve the payment.',
+    s => { s.phone.upi = 'processing'; }, { tap: 'pin' });
   add(T(10, 0, 17), 'The bank debits ₹2,499 and an SMS arrives. As far as the shopper is concerned, they have paid…', s => {
     banner(s, { kind: 'sms', from: 'DM-DEMOBK', text: `₹2,499 debited from A/c XX1234 for UPI txn. Ref ${UPI_REF}. Not you? Call 1800-000-0000.` });
   });
-  add(T(10, 0, 20), after
-      ? '…but Razorpay only says “pending”. The store now shows an honest pending screen, a time promise, and locks Pay.'
-      : '…but Razorpay only says “pending”. Today the store shows a spinner, and the Pay button stays live.', s => {
+  add(T(10, 0, 20), '…but Razorpay only says “pending”. The store shows an honest pending screen with a time promise, and locks Pay so they can’t pay twice.', s => {
     log(s, 'RAZORPAY', 'Razorpay: payment pending');
-    s.phone.upi = null; s.phone.screen = 'status'; s.phone.status = after ? 'pending' : 'processing';
-    if (after) { s.payLocked = true; log(s, 'ORDER', `Pay button locked for ${ORDER_ID} while payment is pending`, 'muted'); }
-  });
+    s.phone.upi = null; s.phone.screen = 'status'; s.phone.status = 'pending';
+    s.payLocked = true; log(s, 'ORDER', `Pay button locked for ${ORDER_ID} while payment is pending`, 'muted');
+  }, { dwell: 3400 });
+  add(T(10, 1, 30), 'They tap “Yes, it was debited”. A ticket is auto-created with every detail filled in, and agent Priya is assigned.', s => {
+    s.ticket = { status: 'open', created: s.t, thread: [] };
+    say(s, 'System', 'Ticket created from the order page (“Money debited? Yes”). Details auto-filled.');
+    say(s, 'Priya', `Hi Ananya, I can see ${AMT} was debited and we’re confirming it with your bank. You’ll hear from us by 12:00 at the latest. No need to pay again.`, 4);
+    log(s, 'TICKET', `Ticket ${TICKET_ID} auto-created from customer CTA`);
+    log(s, 'TICKET', `Assigned to agent Priya · linked to ${ORDER_ID}`, 'muted', 1);
+    log(s, 'NOTIFY', 'Ticket acknowledgement sent to customer (SMS + email)', 'muted', 4);
+  }, { tap: 'debitedYes', dwell: 3400 });
 
-  if (after) {
-    add(T(10, 1, 30), 'They tap “Yes, money debited”. A ticket is auto-created with every detail filled in, and agent Priya is assigned.', s => {
-      s.ticket = { status: 'open', created: s.t, thread: [] };
-      say(s, 'System', 'Ticket created from the order page (“Money debited? Yes”). Details auto-filled.');
-      say(s, 'Priya', `Hi Ananya, I can see ${AMT} was debited and we’re confirming it with your bank. You’ll hear from us by 12:00 at the latest. No need to pay again.`, 4);
-      log(s, 'TICKET', `Ticket ${TICKET_ID} auto-created from customer CTA`);
-      log(s, 'TICKET', `Assigned to agent Priya · linked to ${ORDER_ID}`, 'muted', 1);
-      log(s, 'NOTIFY', 'Ticket acknowledgement sent to customer (SMS + email)', 'muted', 4);
-    }, 'debitedYes');
+  const cron = (t, late) => add(t, late
+      ? `${hm(t)} safety-net check: still watching Razorpay for a late payment after the refund message.`
+      : `${hm(t)} safety-net check (every 15 min): Razorpay still says pending. Pay stays locked.`, s => {
+    s.cronRuns.push(t);
+    log(s, 'CRON', late ? `Cron: late-capture watch for ${ORDER_ID} → nothing yet` : `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
+  }, { cron: true, dwell: DWELL_CRON });
 
-    const cron = (t, late) => add(t, late
-        ? `${hm(t)} safety-net check: still watching for a late payment after the refund message.`
-        : `${hm(t)} safety-net check: Razorpay still says pending. Nothing changes for the shopper; Pay stays locked.`, s => {
-      s.cronRuns.push(t);
-      log(s, 'CRON', late ? `Cron: late-capture watch for ${ORDER_ID} → nothing yet` : `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
-    }, null, true);
-
-    if (sc === 'A') {
-      cron(T(10, 15)); cron(T(10, 30));
-      if (!missed) {
-        add(T(10, 40, 0), '10:40: the bank finally confirms. Razorpay’s webhook sends payment.authorized…', s => {
-          log(s, 'RAZORPAY', 'Razorpay webhook: payment.authorized');
-        });
-        add(T(10, 40, 3), '…then payment.captured. The order is confirmed, the ticket closes itself, and the shopper is notified.', s => {
-          log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
-          confirmOrder(s, 'webhook', false);
-        });
-      } else {
-        add(T(10, 40, 0), '10:40: Razorpay captures the payment, but the webhook to the store fails. The store doesn’t know yet.', s => {
-          log(s, 'RAZORPAY', 'payment.captured at Razorpay · webhook delivery failed (simulated)', 'warn');
-          mark(s, s.t, 'Webhook lost', 'warn');
-        });
-        add(T(10, 45, 0), '10:45: the safety-net check asks Razorpay directly, finds the capture, and places the order. Only 5 minutes lost.', s => {
-          s.cronRuns.push(s.t); s.cronHit = s.t;
-          log(s, 'CRON', 'Cron: Razorpay says captured → order placed', 'ok');
-          confirmOrder(s, 'cron', false);
-        }, null, true);
-      }
-    } else {
-      for (let m = 15; m < 120; m += 15) cron(START + m * 60);
-      add(DEADLINE, '12:00: two hours are up and no payment has arrived. The shopper is told plainly what happens next, and Pay is unlocked.', s => {
-        s.cronRuns.push(s.t);
-        log(s, 'CRON', `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
-        s.order.status = 'refund'; s.order.flash = true;
-        log(s, 'ORDER', `${ORDER_ID}: AWAITING PAYMENT → NOT RECEIVED: REFUND EXPECTED`, 'err', 1);
-        log(s, 'TICKET', '2-hour window passed, customer told money returns in 3–5 days', '', 2);
-        s.ticket.status = 'closed';
-        say(s, 'Priya', `We couldn’t confirm your payment within 2 hours. Your bank will return ${AMT} in 3–5 days. If it comes through instead, we’ll confirm your order and tell you right here.`, 2);
-        log(s, 'NOTIFY', 'Customer notified: push + SMS (“money back in 3–5 days”)', '', 3);
-        s.payLocked = false; s.payReenabled = true;
-        log(s, 'ORDER', 'Pay button re-enabled for customer', 'muted', 3);
-        s.phone.status = 'refund';
-        banner(s, { kind: 'store', from: 'Silver Lane', text: 'We couldn’t confirm your payment. Your money will be back in 3–5 days.' });
-        mark(s, s.t, 'Refund msg', 'bad');
-      }, null, true);
-      if (sc === 'C') {
-        for (let m = 135; m <= 180; m += 15) cron(START + m * 60, true);
-        add(T(13, 10, 0), '13:10: the payment finally lands. Instead of becoming “unmatched money”, it’s matched to SL-10482, the order is placed and the shopper is told.', s => {
-          log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured (late)');
-          s.payLocked = false; s.payReenabled = false;
-          confirmOrder(s, 'webhook', true);
-        });
-      }
-    }
-  } else {
-    // ---- BEFORE: today's behaviour ----
-    add(T(10, 15, 0), '10:15: today’s rule auto-cancels any order still unpaid after 15 minutes, even though the money has left the shopper’s account.', s => {
-      log(s, 'ORDER', `Auto-cancel rule: unpaid after 15 min → ${ORDER_ID} CANCELLED`, 'err');
-      s.order.status = 'cancelled'; s.order.flash = true;
-      s.phone.status = 'cancelled';
-      banner(s, { kind: 'store', from: 'Silver Lane', text: `Your order ${ORDER_ID} has been cancelled. Payment not received.` });
-      mark(s, s.t, 'Auto-cancel', 'bad');
+  if (sc === 'A') {
+    cron(T(10, 15)); cron(T(10, 30));
+    add(T(10, 40, 0), '10:40: the bank finally confirms. Razorpay’s webhook sends payment.authorized…', s => {
+      log(s, 'RAZORPAY', 'Razorpay webhook: payment.authorized');
     });
-    const PT = sc === 'A' ? T(10, 40) : sc === 'C' ? T(13, 10) : null;
-    if (PT && missed) {
-      add(PT, `${hm(PT)}: Razorpay captures the payment but the webhook fails, and there’s no safety-net check. The store never finds out.`, s => {
-        log(s, 'RAZORPAY', 'payment.captured at Razorpay · webhook delivery failed (simulated)', 'warn');
-        log(s, 'ORDER', 'No safety-net check exists → store never learns about this payment', 'err', 1);
-        mark(s, s.t, 'Lost', 'bad');
-      });
-    } else if (PT) {
-      add(PT, `${hm(PT)}: the payment is captured, but the order is already cancelled. ₹2,499 is now unmatched money, and the shopper still only sees “Order cancelled”.`, s => {
-        log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
-        log(s, 'ORDER', 'No matching active order: money unmatched', 'err', 1);
-        s.order.unmatched = true; s.order.flash = true;
-        mark(s, s.t, 'Unmatched', 'bad');
-      });
-    } else {
-      add(DEADLINE, '12:00: nothing happens. Nobody tells the shopper whether, or when, their ₹2,499 comes back.', s => {
-        mark(s, s.t, 'Silence', 'bad');
-      });
+    add(T(10, 40, 3), '…then payment.captured. The order is confirmed, the ticket closes itself, and the shopper gets a notification.', s => {
+      log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
+      confirmOrder(s, false);
+    }, { dwell: 3400 });
+  } else {
+    for (let m = 15; m < 120; m += 15) cron(START + m * 60);
+    add(DEADLINE, '12:00: two hours are up and no payment has arrived. The shopper is told plainly what happens next, and Pay is unlocked.', s => {
+      s.cronRuns.push(s.t);
+      log(s, 'CRON', `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
+      s.order.status = 'refund'; s.order.flash = true;
+      log(s, 'ORDER', `${ORDER_ID}: AWAITING PAYMENT → NOT RECEIVED: REFUND EXPECTED`, 'err', 1);
+      log(s, 'TICKET', '2-hour window passed, customer told money returns in 3–5 days', '', 2);
+      s.ticket.status = 'closed';
+      say(s, 'Priya', `We couldn’t confirm your payment within 2 hours. Your bank will return ${AMT} in 3–5 days. If it comes through instead, we’ll confirm your order and tell you right here.`, 2);
+      log(s, 'NOTIFY', 'Customer notified: push + SMS (“money back in 3–5 days”)', '', 3);
+      s.payLocked = false;
+      log(s, 'ORDER', 'Pay button re-enabled for customer', 'muted', 3);
+      s.phone.status = 'refund';
+      banner(s, { kind: 'store', from: 'Silver Lane', text: 'We couldn’t confirm your payment. Your money will be back in 3–5 days.' });
+    }, { cron: true, dwell: 3600 });
+    if (sc === 'C') {
+      for (let m = 135; m <= 180; m += 15) cron(START + m * 60, true);
+      add(T(13, 10, 0), '13:10: the payment finally lands. Instead of becoming “unmatched money”, it’s matched to SL-10482, the order is placed and the shopper is told.', s => {
+        log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured (late)');
+        confirmOrder(s, true);
+      }, { dwell: 3600 });
     }
   }
-
-  // ---- Outcome ----
-  const lastT = S[S.length - 1].t;
-  add(lastT + 20, 'Outcome summary.', s => { s.outcome = outcomeFor(); });
+  add(S[S.length - 1].t + 20, 'Done. See the outcome summary on the right, or pick another scenario.', s => { s.outcome = outcomeFor(sc); });
   return S;
 }
 
-function outcomeFor() {
-  const { scenario: sc, mode } = cfg, missed = cfg.webhookMissed && sc === 'A';
-  if (mode === 'before') {
-    if (sc === 'B') return { good: false, h: 'Before: debited, cancelled, and left in the dark',
-      p: 'The order was cancelled at 10:15 while the money had already left the shopper’s account.',
-      li: ['No pending explanation, no time promise', 'No way to raise a ticket from the order page', 'Shopper never told when the money comes back'] };
-    if (missed) return { good: false, h: 'Before: the payment is lost to the store',
-      p: 'The webhook failed and nothing re-checks Razorpay, so the captured payment is never matched.',
-      li: ['Order cancelled at 10:15', '₹2,499 captured but invisible to the store', 'Shopper sees “Order cancelled” with no help option'] };
-    return { good: false, h: 'Before: ₹2,499 captured, order cancelled, money unmatched',
-      p: `The order auto-cancelled at 10:15. When the payment was captured at ${sc === 'A' ? '10:40' : '13:10'} there was nothing to attach it to.`,
-      li: ['Needs manual reconciliation and a refund', 'Pay button stayed live: double-payment risk', 'Shopper sees “Order cancelled” with no help option'] };
-  }
-  if (sc === 'A' && !missed) return { good: true, h: 'After: order confirmed at 10:40',
+function outcomeFor(sc) {
+  if (sc === 'A') return { h: 'Order confirmed at 10:40',
     p: 'The late payment was matched to the still-open order as soon as Razorpay confirmed it.',
     li: ['Pay was locked the whole time: no double payment', 'Ticket opened in one tap and closed itself', 'Shopper told what was happening at every step'] };
-  if (sc === 'A') return { good: true, h: 'After: the safety net caught a missed webhook',
-    p: 'The webhook never arrived, but the 10:45 check asked Razorpay directly and placed the order.',
-    li: ['5 minutes lost instead of a lost order', 'No manual reconciliation', 'Ticket closed and shopper notified automatically'] };
-  if (sc === 'B') return { good: true, h: 'After: a clear answer at the 2-hour mark',
+  if (sc === 'B') return { h: 'A clear answer at the 2-hour mark',
     p: 'No payment arrived, so at 12:00 the shopper was told the money returns in 3–5 days and Pay was unlocked.',
     li: ['Promise kept: an answer within 2 hours', 'Ticket closed with a written explanation', 'Shopper can reorder whenever they like'] };
-  return { good: true, h: 'After: a late payment still became an order',
+  return { h: 'A late payment still became an order',
     p: 'The shopper heard “money back in 3–5 days” at 12:00, but the payment landed at 13:10. It was matched to SL-10482 instead of becoming unmatched money.',
     li: ['Order confirmed, no refund needed', 'Ticket thread and notification kept the shopper updated', 'No manual reconciliation'] };
 }
 
-/* ================= Engine ================= */
-function reset() {
-  playing = false; dwellUntil = 0; pendingTap = null;
-  st = initState(); steps = buildSteps(); stepIdx = 0;
-  clearTimeout(bannerTimer); $('bannerLayer').innerHTML = ''; shownBanner = null;
-  renderAll();
+/* ================= Virtual pointer ================= */
+const ptr = $('ptr');
+function ptrMove(el) {
+  const pr = $('phone').getBoundingClientRect(), r = el.getBoundingClientRect();
+  const x = (r.left + r.width * 0.55 - pr.left) / phoneScale, y = (r.top + r.height * 0.55 - pr.top) / phoneScale;
+  ptr._x = x; ptr._y = y;
+  ptr.classList.add('show');
+  ptr.style.transform = `translate(${x - 3}px, ${y - 3}px)`;
 }
-
-function execStep() {
-  const step = steps[stepIdx];
-  if (!step) return;
-  document.querySelectorAll('[data-tap].tapping').forEach(el => el.classList.remove('tapping'));
-  st.t = step.t;
-  step.run(st);
-  st.title = step.title;
-  stepIdx++;
-  renderAll();
+async function ptrClick(el, alive) {
+  ptrMove(el); await sleep(820); if (!alive()) return false;
+  ptr.classList.add('down'); el.classList.add('pressed');
+  const rp = document.createElement('div'); rp.className = 'ripple';
+  rp.style.left = ptr._x + 'px'; rp.style.top = ptr._y + 'px';
+  $('phone').appendChild(rp); setTimeout(() => rp.remove(), 600);
+  await sleep(170);
+  ptr.classList.remove('down'); el.classList.remove('pressed');
+  await sleep(120);
+  return alive();
 }
-
-function next() {
-  if (stepIdx >= steps.length) return;
-  playing = false; pendingTap = null;
-  execStep();
+function ptrPark() {
+  ptr.style.transform = 'translate(300px, 640px)';
 }
-
-function userTap(key) {
-  const step = steps[stepIdx];
-  if (!step || step.tap !== key) return;
-  if (key === 'pinSubmit' && st.phone.pin.length < 4) {
-    st.phone.shake = true; renderUpi(); st.phone.shake = false; return;
-  }
-  pendingTap = null;
-  execStep();
-  if (playing) dwellUntil = performance.now() + DWELL[cfg.speed];
-}
-
-function frame(now) {
-  const dt = lastFrame ? Math.min(0.1, (now - lastFrame) / 1000) : 0;
-  lastFrame = now;
-  if (playing) {
-    if (stepIdx >= steps.length) { playing = false; renderControls(); }
-    else if (now >= dwellUntil) {
-      const step = steps[stepIdx];
-      if (pendingTap) { pendingTap = null; execStep(); dwellUntil = now + DWELL[cfg.speed]; }
-      else {
-        st.t = Math.min(step.t, st.t + dt * RATE[cfg.speed]);
-        if (st.t >= step.t) {
-          if (step.tap) {
-            // show a "finger press" on the button before acting
-            const el = document.querySelector(`[data-tap="${step.tap}"]`);
-            if (el) el.classList.add('tapping');
-            if (step.tap === 'pinSubmit' && st.phone.pin.length < 4) { st.phone.pin = '1234'; renderUpi(); document.querySelector('[data-tap="pinSubmit"]')?.classList.add('tapping'); }
-            pendingTap = true; dwellUntil = now + Math.max(350, DWELL[cfg.speed] * 0.35);
-          } else { execStep(); dwellUntil = now + DWELL[cfg.speed]; }
-        }
-      }
+async function doTap(key, alive) {
+  if (key === 'pin') {
+    for (const d of '2580') {
+      const k = document.querySelector(`[data-digit="${d}"]`);
+      if (!k || !(await ptrClick(k, alive))) return false;
+      st.phone.pin += d; renderUpi(true);
+      await sleep(80);
     }
-    renderClock();
+    const go = document.querySelector('[data-go]');
+    return go ? ptrClick(go, alive) : alive();
   }
-  requestAnimationFrame(frame);
+  const el = document.querySelector(`[data-tap="${key}"]`);
+  return el ? ptrClick(el, alive) : alive();
+}
+
+/* ================= Runner ================= */
+function advanceTo(target, alive) {
+  return new Promise(res => {
+    let last = performance.now();
+    const f = now => {
+      if (!alive()) return res();
+      st.t = Math.min(target, st.t + (now - last) / 1000 * RATE); last = now;
+      renderClock();
+      if (st.t >= target) res(); else requestAnimationFrame(f);
+    };
+    requestAnimationFrame(f);
+  });
+}
+
+async function run(sc) {
+  const id = ++runId, alive = () => id === runId;
+  scenario = sc; done = false;
+  st = initState(); steps = buildSteps(sc); stepIdx = 0;
+  clearTimeout(bannerTimer); $('bannerLayer').innerHTML = ''; shownBanner = null;
+  ptr.classList.remove('show'); ptrPark();
+  renderAll();
+  await sleep(700);
+  for (const step of steps) {
+    if (!alive()) return;
+    if (step.tap) {
+      // show what is about to happen while the pointer moves
+      st.title = step.title; st.no = stepIdx + 1; renderNow();
+      if (!(await doTap(step.tap, alive))) return;
+    }
+    await advanceTo(step.t, alive); if (!alive()) return;
+    st.t = step.t; step.run(st); st.title = step.title; stepIdx++; st.no = stepIdx;
+    if (step.tap === 'debitedYes') { ptr.classList.remove('show'); }
+    renderAll();
+    await sleep(step.dwell || DWELL);
+  }
+  if (alive()) { done = true; renderCards(); renderNow(); }
 }
 
 /* ================= Rendering ================= */
-function renderAll() { renderControls(); renderNarr(); renderPhone(); renderUpi(); renderBanner(); renderBackend(); renderClock(); }
+function renderAll() { renderCards(); renderNow(); renderPhone(); renderUpi(); renderBanner(); renderBackend(); renderClock(); }
 
-function renderControls() {
-  document.querySelectorAll('#scSeg button').forEach(b => b.classList.toggle('on', b.dataset.sc === cfg.scenario));
-  document.querySelectorAll('#modeSeg button').forEach(b => b.classList.toggle('on', b.dataset.mode === cfg.mode));
-  document.querySelectorAll('#spSeg button').forEach(b => b.classList.toggle('on', +b.dataset.sp === cfg.speed));
-  const done = stepIdx >= steps.length;
-  $('playBtn').innerHTML = playing ? '❚❚ Pause' : (done ? '▶ Replay' : '▶ Play');
-  $('nextBtn').disabled = done;
-  const wh = $('whToggle'), on = cfg.scenario === 'A';
-  wh.classList.toggle('disabled', !on); $('whMissed').disabled = !on; $('whMissed').checked = cfg.webhookMissed && on;
-  $('modePill').innerHTML = `<span class="modepill ${cfg.mode}">${cfg.mode === 'before' ? 'Before · today’s behaviour' : 'After · with the fix'}</span>`;
+function renderCards() {
+  $('scCards').innerHTML = Object.entries(SCENARIOS).map(([k, v]) => {
+    const on = k === scenario;
+    const state = on ? (done ? 'Replay ↺' : 'Playing') : 'Play ▸';
+    const prog = on ? (stepIdx / steps.length * 100) : 0;
+    return `<button class="sc-card${on ? ' on' : ''}${scenario ? '' : ' idle-pulse'}" data-sc="${k}">
+      <div class="sc-top"><span class="sc-letter">${k}</span><span class="sc-title">${v.title}</span><span class="sc-state">${state}</span></div>
+      <p class="sc-desc">${v.desc}</p>
+      <div class="sc-meta">${v.meta.map(([t, c]) => `<span class="${c || ''}">${t}</span>`).join('')}</div>
+      <span class="sc-prog" style="width:${prog}%"></span></button>`;
+  }).join('');
 }
 
-function renderNarr() {
-  const n = steps.length;
-  $('stepNo').textContent = stepIdx === 0 ? 'Ready' : `Step ${stepIdx} / ${n}`;
-  $('narrText').textContent = st.title || `Scenario ${cfg.scenario}${cfg.webhookMissed && cfg.scenario === 'A' ? ' (webhook missed)' : ''}, ${cfg.mode === 'before' ? 'today’s behaviour' : 'with the fix'}. Press Play, or Next step to present at your own pace.`;
-  const nx = steps[stepIdx];
-  $('narrHint').textContent = nx ? (nx.tap ? 'Next: tap the pulsing button on the phone' : `Next at ${hms(nx.t)}`) : 'End of scenario';
-  $('narrBar').style.width = `${(stepIdx / n) * 100}%`;
+function renderNow() {
+  if (!scenario) {
+    $('nowStep').textContent = 'Ready';
+    $('nowText').textContent = 'Pick scenario A, B or C above. The whole story then plays by itself.';
+    $('nowBar').style.width = '0%'; return;
+  }
+  $('nowStep').textContent = done ? `Scenario ${scenario} · done` : `Scenario ${scenario} · step ${Math.max(1, st.no || 0)} of ${steps.length}`;
+  $('nowText').textContent = st.title || 'Starting…';
+  $('nowBar').style.width = `${stepIdx / steps.length * 100}%`;
 }
 
 function renderClock() {
   $('beClock').textContent = hms(st.t);
   $('sbTime').textContent = hm(st.t);
-  $('phoneClockLbl').textContent = hm(st.t);
+  $('nowClock').textContent = hm(st.t);
   const [a, b] = tlRange();
   const pct = Math.max(0, Math.min(100, (st.t - a) / (b - a) * 100));
-  const cur = $('tlCur'), fill = $('tlFill');
-  if (cur) cur.style.left = pct + '%';
-  if (fill) fill.style.width = pct + '%';
+  if ($('tlCur')) $('tlCur').style.left = pct + '%';
+  if ($('tlFill')) $('tlFill').style.width = pct + '%';
   const nc = $('cronNext');
-  if (nc) {
-    const nextRun = steps.slice(stepIdx).find(s => s.cron);
-    nc.textContent = cronActive() ? (nextRun ? hm(nextRun.t) : '—') : '—';
-  }
-}
-
-function btnTap(key, label, cls = 'primary') {
-  const nx = steps[stepIdx];
-  const hint = nx && nx.tap === key ? ' hint' : '';
-  return `<button class="btn ${cls}${hint}" data-tap="${key}">${label}</button>`;
+  if (nc) { const n = steps.slice(stepIdx).find(s => s.cron); nc.textContent = cronActive() && n ? hm(n.t) : '—'; }
 }
 
 function renderPhone() {
@@ -761,7 +660,7 @@ function renderPhone() {
         <div class="sizes"><span>Size</span><b>12</b><b class="on">14</b><b>16</b><b>18</b></div>
         <div class="perks"><span>✓ Free delivery</span><span>✓ 30-day returns</span><span>✓ Hallmarked</span></div>
       </div></div>
-      <div class="cta-bar">${btnTap('addToCart', 'Add to cart')}</div>`;
+      <div class="cta-bar"><button class="btn primary" data-tap="addToCart">Add to cart</button></div>`;
   } else if (p.screen === 'cart') {
     el.innerHTML = `<div class="sbody"><div class="pad">
       <h2 class="h-scr">Your cart</h2>
@@ -769,32 +668,22 @@ function renderPhone() {
       <div class="sum"><div><span>Subtotal</span><span>₹2,499</span></div><div><span>Delivery</span><span style="color:var(--ok)">Free</span></div><div class="tot"><span>Total</span><span>₹2,499</span></div></div>
       <div class="paynote">${ICON.shield} Delivering to Ananya Rao · Bengaluru 560001</div>
       </div></div>
-      <div class="cta-bar">${btnTap('payUpi', 'Pay with UPI · ₹2,499')}</div>`;
+      <div class="cta-bar"><button class="btn primary" data-tap="payUpi">Pay with UPI · ₹2,499</button></div>`;
   } else {
     el.innerHTML = `<div class="sbody"><div class="pad">${statusScreen()}</div></div>`;
   }
 }
 
 function statusScreen() {
-  const p = st.phone, s = p.status;
-  const head = `<div class="ordhead"><h2>Order ${ORDER_ID}</h2><span>${AMT} · UPI</span></div>`;
-  const track = (n, cls) => `<div class="track"><b>Placed</b><i class="${n >= 1 ? 'd' : ''}"></i><b>Payment</b><i class="${n >= 2 ? 'd' : ''}"></i><b>Confirmed</b></div>`;
-
-  if (s === 'processing') {
-    return head + `<div class="state neutral" style="text-align:center;padding:26px 16px"><div class="spin br"></div>
-      <h3>Processing your payment…</h3><p>Please don’t press back or close the app.</p></div>
-      <button class="btn primary">Retry payment · ₹2,499</button>`;
-  }
-  if (s === 'cancelled') {
-    return head + `<div class="state bad"><div class="sic">${ICON.x}</div><h3>Order cancelled</h3><p>We didn’t receive your payment.</p></div>
-      <button class="btn secondary">Continue shopping</button>`;
-  }
-
-  let out = head;
+  const s = st.phone.status;
+  const track = n => `<div class="track"><b>Placed</b><i class="${n >= 1 ? 'd' : ''}"></i><b>Payment</b><i class="${n >= 2 ? 'd' : ''}"></i><b>Confirmed</b></div>`;
+  let out = `<div class="ordhead"><h2>Order ${ORDER_ID}</h2><span>${AMT} · UPI</span></div>`;
   if (s === 'pending') {
     out += `<div class="state pending"><div class="sic">${ICON.clock}</div>
       <h3>Payment pending: we’re confirming with your bank.</h3>
-      <p class="promise">${ICON.clock} Confirming within 30 min, at most 2 hours.</p>${track(1)}</div>`;
+      <p class="promise">${ICON.clock} Confirming within 30 min, at most 2 hours.</p>${track(1)}</div>
+      <button class="btn primary" disabled>Pay ₹2,499</button>
+      <p class="reason">${ICON.lock}<span>Disabled so you don’t pay twice while we confirm.</span></p>`;
   } else if (s === 'confirmed') {
     out += `<div class="state ok"><div class="sic">${ICON.check}</div><h3>Payment received. Order ${ORDER_ID} confirmed.</h3>
       <p>We’ll share tracking as soon as it ships.</p>${track(2)}</div>`;
@@ -803,23 +692,15 @@ function statusScreen() {
       <p>No refund to wait for: your ${AMT} went to this order.</p>${track(2)}</div>`;
   } else if (s === 'refund') {
     out += `<div class="state bad"><div class="sic">${ICON.back}</div><h3>We couldn’t confirm your payment. Your money will be back in 3–5 days.</h3>
-      <p>Your bank returns it to A/c XX1234 automatically.</p></div>`;
-  }
-
-  if (s === 'pending') {
-    out += `<button class="btn primary" disabled>Pay ₹2,499</button>
-      <p class="reason">${ICON.lock}<span>Disabled so you don’t pay twice while we confirm.</span></p>`;
-  } else if (s === 'refund') {
-    out += `<button class="btn primary">Pay again · ₹2,499</button>
+      <p>Your bank returns it to A/c XX1234 automatically.</p></div>
+      <button class="btn primary">Pay again · ₹2,499</button>
       <p class="reason"><span>Pay is enabled again. Reorder whenever you’re ready.</span></p>`;
   }
-
   if (st.ticket) out += phoneTicket();
   else if (s === 'pending') {
     out += `<div class="card-p"><h4>Money debited from your account?</h4>
       <p class="small" style="margin:4px 0 0">Tell us and we’ll open a ticket for you. No forms.</p>
-      <div class="yn"><button class="y${steps[stepIdx] && steps[stepIdx].tap === 'debitedYes' ? ' hint' : ''}" data-tap="debitedYes">Yes, it was debited</button><button data-no="1">No</button></div>
-      ${p.noNote ? '<p class="small" style="margin:8px 0 0">Okay. If you notice a debit later, tap Yes and we’ll open a ticket.</p>' : ''}</div>`;
+      <div class="yn"><button class="y" data-tap="debitedYes">Yes, it was debited</button><button>No</button></div></div>`;
   }
   return out;
 }
@@ -833,23 +714,20 @@ function phoneTicket() {
     <div class="tk-top"><h4>Ticket #${TICKET_ID}${tk.status === 'open' ? ' created' : ''}</h4>${chip}</div>
     <p class="tk-msg">${tk.status === 'open' ? 'Agent Priya is assigned and will keep you updated.' : 'Agent Priya kept you updated on this ticket.'}</p>
     <div class="kv"><div>Name<b>${CUSTOMER.name}</b></div><div>Phone<b>${CUSTOMER.phone}</b></div><div>Order ID<b>${ORDER_ID}</b></div><div>Amount<b>${AMT}</b></div></div>
-    <div class="thread">${msgs.map(m => `<div class="bub${m === fresh && tk.thread.length > 2 ? ' new' : ''}"><div class="who"><span>${m.who}${m.who === 'Priya' ? ' · Support' : ''}</span><span>${hm(m.t)}</span></div>${m.text}</div>`).join('')}</div>
+    <div class="thread">${msgs.map(m => `<div class="bub${m === fresh && tk.thread.length > 2 ? ' new' : ''}"><div class="who"><span>${m.who} · Support</span><span>${hm(m.t)}</span></div>${m.text}</div>`).join('')}</div>
   </div>`;
 }
 
-function renderUpi() {
+function renderUpi(still) {
   const p = st.phone, el = $('upiLayer');
   if (!p.upi) { el.innerHTML = ''; return; }
-  const nx = steps[stepIdx];
-  const hint = nx && nx.tap === 'pinSubmit' ? ' hint' : '';
   const body = p.upi === 'pin'
     ? `<div class="pinlbl">Enter 4–6 digit UPI PIN</div>
-       <div class="dots${p.shake ? ' shake' : ''}">${[0,1,2,3,4,5].map(i => `<i class="${i < p.pin.length ? 'f' : ''}"></i>`).join('')}</div>
+       <div class="dots">${[0,1,2,3,4,5].map(i => `<i class="${i < p.pin.length ? 'f' : ''}"></i>`).join('')}</div>
        <div class="keys">${[1,2,3,4,5,6,7,8,9].map(d => `<button data-digit="${d}">${d}</button>`).join('')}
-         <button data-digit="del">⌫</button><button data-digit="0">0</button>
-         <button class="go${hint}" data-tap="pinSubmit">Pay</button></div>`
+         <button>⌫</button><button data-digit="0">0</button><button class="go" data-go="1">Pay</button></div>`
     : `<div class="proc"><div class="spin"></div><div style="font-weight:600;color:#1C2433">Processing payment</div><div class="from">Waiting for your bank…</div></div>`;
-  el.innerHTML = `<div class="upi-wrap"><div class="upi">
+  el.innerHTML = `<div class="upi-wrap"${still ? ' style="animation:none"' : ''}><div class="upi${still || p.upi === 'processing' ? ' static' : ''}">
     <div class="uhead"><span class="ulogo">UPI</span>UPI app <span style="margin-left:auto;font-weight:500;color:#7A8394;font-size:12px">Secure</span></div>
     <div class="payee">Paying <b>Silver Lane (demo store)</b></div>
     <div class="amt">₹2,499.00</div>
@@ -857,146 +735,90 @@ function renderUpi() {
     ${body}</div></div>`;
 }
 
-let shownBanner = null;
 function renderBanner() {
   const b = st.banner, layer = $('bannerLayer');
   if (!b || b.id === shownBanner) return;
-  shownBanner = b.id;
-  clearTimeout(bannerTimer);
+  shownBanner = b.id; clearTimeout(bannerTimer);
   const ic = b.kind === 'sms' ? '<div class="bic sms">SMS</div>' : '<div class="bic store">S</div>';
   layer.innerHTML = `<div class="banner">${ic}<div style="flex:1;min-width:0"><div class="bt"><b>${b.kind === 'sms' ? 'Messages · ' + b.from : b.from}</b><span>now</span></div><div class="bx">${b.text}</div></div></div>`;
   bannerTimer = setTimeout(() => {
     const el = layer.firstElementChild; if (el) el.classList.add('out');
     bannerTimer = setTimeout(() => { layer.innerHTML = ''; }, 380);
-  }, 5200);
+  }, 4800);
 }
 
-function tlRange() { return [START, cfg.scenario === 'C' ? T(13, 30) : T(12, 15)]; }
-function cronActive() { return cfg.mode === 'after' && st.order && !['confirmed'].includes(st.order.status) && !(cfg.scenario === 'B' && st.order.status === 'refund'); }
+function tlRange() { return [START, scenario === 'C' ? T(13, 30) : T(12, 15)]; }
+function cronActive() { return st.order && st.order.status !== 'confirmed' && !(scenario !== 'C' && st.order.status === 'refund'); }
 
 function renderBackend() {
-  // timeline
-  const [a, b] = tlRange(), span = b - a, pos = t => ((t - a) / span * 100).toFixed(2) + '%';
+  const [a, b] = tlRange(), pos = t => ((t - a) / (b - a) * 100).toFixed(2) + '%';
   let tl = '<div class="tl-line"></div><div class="tl-fill" id="tlFill"></div>';
   for (let t = a; t <= b; t += 900) {
-    const ran = st.cronRuns.includes(t);
-    if (cfg.mode === 'after' && t > a) tl += `<div class="tl-tick${ran ? ' ran' : ''}" style="left:${pos(t)}"></div>`;
+    if (t > a) tl += `<div class="tl-tick${st.cronRuns.includes(t) ? ' ran' : ''}" style="left:${pos(t)}"></div>`;
     if ((t - a) % 1800 === 0) tl += `<div class="tl-lab" style="left:${pos(t)}">${hm(t)}</div>`;
   }
-  if (cfg.mode === 'after') tl += `<div class="tl-mark deadline" style="left:${pos(DEADLINE)}">2-hr promise</div>`;
-  st.marks.forEach(m => { if (m.t !== DEADLINE || cfg.mode === 'before') tl += `<div class="tl-mark ${m.kind}" style="left:${pos(m.t)}${m.kind === 'bad' && m.t === DEADLINE ? ';top:-1px' : ''}">${m.label}</div>`; });
+  tl += `<div class="tl-mark deadline" style="left:${pos(DEADLINE)}">2-hr promise</div>`;
+  st.marks.forEach(m => { tl += `<div class="tl-mark ${m.kind}" style="left:${pos(m.t)}">${m.label}</div>`; });
   tl += '<div class="tl-cur" id="tlCur"></div>';
   $('tl').innerHTML = tl;
 
-  // orders
   const o = st.order;
-  if (!o) $('ordersBox').innerHTML = '<div class="empty">No orders yet. Waiting for the shopper to check out…</div>';
+  if (!o) $('ordersBox').innerHTML = `<div class="empty">${scenario ? 'No orders yet. Waiting for the shopper to check out…' : 'Pick a scenario to start.'}</div>`;
   else {
-    const chip = { awaiting: ['awaiting', 'Awaiting payment'], confirmed: ['confirmed', 'Confirmed'], refund: ['refund', 'Not received: refund expected'], cancelled: ['cancelled', 'Cancelled'] }[o.status];
+    const chip = { awaiting: ['awaiting', 'Awaiting payment'], confirmed: ['confirmed', 'Confirmed'], refund: ['refund', 'Not received: refund expected'] }[o.status];
     $('ordersBox').innerHTML = `<table class="orders"><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Method</th><th>Created</th><th>Status</th></tr></thead>
       <tbody><tr><td class="mono"><b>${ORDER_ID}</b></td><td>${CUSTOMER.name}</td><td>${AMT}</td><td>UPI</td><td class="mono">${hms(o.created)}</td>
-      <td><span class="chip dot ${chip[0]}${o.flash ? ' flash' : ''}">${chip[1]}</span>${o.unmatched ? ' <span class="chip unmatched flash">₹2,499 unmatched</span>' : ''}${st.payLocked ? ' <span class="chip closed" title="Customer’s Pay button is disabled">Pay locked</span>' : ''}</td></tr></tbody></table>`;
+      <td><span class="chip dot ${chip[0]}${o.flash ? ' flash' : ''}">${chip[1]}</span>${st.payLocked ? ' <span class="chip closed" title="Customer’s Pay button is disabled">Pay locked</span>' : ''}</td></tr></tbody></table>`;
     o.flash = false;
   }
 
-  // outcome
   const oc = st.outcome;
-  $('outcomeBox').innerHTML = oc ? `<div class="outcome ${oc.good ? 'good' : 'bad'}"><div style="color:${oc.good ? 'var(--ok)' : 'var(--alert)'};margin-top:3px">${oc.good ? ICON.check : ICON.x}</div>
-    <div><h4>${oc.h}</h4><p>${oc.p}</p><ul>${oc.li.map(x => `<li>${x}</li>`).join('')}</ul></div></div>` : '';
+  $('outcomeBox').innerHTML = oc ? `<div class="outcome good"><div style="color:var(--ok);margin-top:3px">${ICON.check}</div>
+    <div><h4>Outcome · ${oc.h}</h4><p>${oc.p}</p><ul>${oc.li.map(x => `<li>${x}</li>`).join('')}</ul></div></div>` : '';
 
-  // log
   const logs = [...st.logs].sort((x, y) => y.t - x.t || y.id - x.id);
   $('logList').innerHTML = logs.length ? logs.map(l => `<div class="lrow ${l.kind}${l.id > lastSeenLog ? ' new' : ''}"><span class="lt">${hms(l.t)}</span><span class="src ${l.src}">${l.src}</span><span class="msg">${l.msg}</span></div>`).join('')
     : '<div class="empty">Waiting for events…</div>';
-  lastSeenLog = logSeq;
-  $('logList').scrollTop = 0;
+  lastSeenLog = logSeq; $('logList').scrollTop = 0;
 
-  // ticket
+  $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net cron</h4><span class="sub">every 15 min</span></div>
+    <div class="cron-stats"><div>Runs so far<b>${st.cronRuns.length}</b></div><div>Next run<b id="cronNext">—</b></div><div>Watching<b>${cronActive() ? ORDER_ID : '—'}</b></div></div>
+    <div class="cron-runs">${st.cronRuns.map(t => `<span>${hm(t)}</span>`).join('') || '<span style="background:transparent;color:var(--muted);padding:0;font-family:var(--sans)">First run at 10:15</span>'}</div>`;
+
   const tk = st.ticket;
-  if (cfg.mode === 'before') {
-    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Support ticket</h4></div><div class="rule bad">No ticket. Today the order page has no way for the shopper to report a debit, so support only hears about it when they call or email angry.</div>`;
-  } else if (!tk) {
+  if (!tk) {
     $('ticketBox').innerHTML = `<div class="panel-h"><h4>Support ticket</h4><span class="sub">auto-created from the order page</span></div><div class="empty" style="padding:4px 0">No ticket yet. One is created the moment the shopper taps “Money debited? Yes”.</div>`;
   } else {
     const chip = tk.status === 'open' ? '<span class="chip open dot">Open</span>' : '<span class="chip closed">Closed</span>';
     $('ticketBox').innerHTML = `<div class="panel-h"><h4>Ticket #${TICKET_ID}</h4><span>${tk.updated ? '<span class="chip confirmed">Updated</span> ' : ''}${chip}</span></div>
       <div class="tk-grid"><div>Customer<b>${CUSTOMER.name}</b></div><div>Phone<b>${CUSTOMER.phone}</b></div>
-      <div>Linked order<b>${ORDER_ID}</b></div><div>Amount<b>${AMT} · UPI ref ${UPI_REF.slice(0, 4)}…</b></div>
+      <div>Linked order<b>${ORDER_ID}</b></div><div>Amount<b>${AMT} · UPI</b></div>
       <div>Source<b>Customer CTA (auto-filled)</b></div><div>Created<b>${hms(tk.created)}</b></div></div>
       <div class="tk-agent"><span class="av">P</span> Agent <b>Priya</b> <span class="small">assigned automatically</span></div>
       <div class="thread" id="tkThread">${tk.thread.map(m => `<div class="bub${m.who === 'System' ? ' sys' : ''}"><div class="who"><span>${m.who}</span><span>${hm(m.t)}</span></div>${m.text}</div>`).join('')}</div>`;
     const th = $('tkThread'); th.scrollTop = th.scrollHeight;
   }
-
-  // cron
-  if (cfg.mode === 'before') {
-    $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net check</h4></div>
-      <div class="rule bad">None today. If a Razorpay webhook is late or lost, nothing re-checks the payment.</div>
-      <div class="rule">Rule in place: auto-cancel any order unpaid after 15 minutes.</div>`;
-  } else {
-    $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net cron</h4><span class="sub">every 15 min · asks Razorpay directly</span></div>
-      <div class="cron-stats"><div>Runs so far<b>${st.cronRuns.length}</b></div><div>Next run<b class="tnum" id="cronNext">—</b></div><div>Watching<b>${st.order && cronActive() ? ORDER_ID : '—'}</b></div></div>
-      <div class="cron-runs">${st.cronRuns.map(t => `<span class="${t === st.cronHit ? 'hit' : ''}">${hm(t)}</span>`).join('') || '<span style="background:transparent;color:var(--muted);padding:0">First run at 10:15</span>'}</div>`;
-  }
 }
 
 /* ================= Phone scaling ================= */
 function fitPhone() {
-  const holder = $('phoneHolder'), sc = $('phoneScale'), ph = $('phone');
-  const avail = holder.clientHeight;
-  const s = Math.max(0.5, Math.min(1, avail / 800));
-  ph.style.transform = `scale(${s})`;
-  sc.style.width = 390 * s + 'px'; sc.style.height = 800 * s + 'px';
+  phoneScale = Math.max(0.5, Math.min(1, $('phoneHolder').clientHeight / 800));
+  $('phone').style.transform = `scale(${phoneScale})`;
+  $('phoneScale').style.width = 390 * phoneScale + 'px';
+  $('phoneScale').style.height = 800 * phoneScale + 'px';
 }
 
 /* ================= Events ================= */
-document.addEventListener('click', e => {
-  const tap = e.target.closest('[data-tap]');
-  if (tap) { userTap(tap.dataset.tap); return; }
-  const dg = e.target.closest('[data-digit]');
-  if (dg && st.phone.upi === 'pin') {
-    const d = dg.dataset.digit;
-    if (d === 'del') st.phone.pin = st.phone.pin.slice(0, -1);
-    else if (st.phone.pin.length < 6) st.phone.pin += d;
-    renderUpi(); return;
-  }
-  if (e.target.closest('[data-no]')) { st.phone.noNote = true; renderPhone(); return; }
-  const scb = e.target.closest('#scSeg button');
-  if (scb) { cfg.scenario = scb.dataset.sc; if (cfg.scenario !== 'A') cfg.webhookMissed = false; reset(); return; }
-  const mb = e.target.closest('#modeSeg button');
-  if (mb) { cfg.mode = mb.dataset.mode; reset(); return; }
-  const sp = e.target.closest('#spSeg button');
-  if (sp) { cfg.speed = +sp.dataset.sp; renderControls(); return; }
-});
-$('whMissed').addEventListener('change', e => { cfg.webhookMissed = e.target.checked; reset(); });
-$('playBtn').addEventListener('click', togglePlay);
-$('nextBtn').addEventListener('click', next);
-$('resetBtn').addEventListener('click', reset);
-
-function togglePlay() {
-  if (stepIdx >= steps.length) { reset(); }
-  playing = !playing; dwellUntil = playing ? performance.now() + 300 : 0;
-  if (!playing) { pendingTap = null; document.querySelectorAll('.tapping').forEach(el => el.classList.remove('tapping')); }
-  renderControls(); renderPhone(); renderUpi(); renderNarr();
-}
-document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT') return;
-  if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
-  else if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
-  else if (e.key === 'r' || e.key === 'R') reset();
-  else if (/^[0-9]$/.test(e.key) && st.phone.upi === 'pin' && st.phone.pin.length < 6) { st.phone.pin += e.key; renderUpi(); }
-  else if (e.key === 'Enter' && st.phone.upi === 'pin') userTap('pinSubmit');
+$('scCards').addEventListener('click', e => {
+  const c = e.target.closest('[data-sc]');
+  if (c) run(c.dataset.sc);
 });
 window.addEventListener('resize', fitPhone);
 
-// URL params for direct links, e.g. ?s=C&m=before&missed=1
-const q = new URLSearchParams(location.search);
-if (['A', 'B', 'C'].includes((q.get('s') || '').toUpperCase())) cfg.scenario = q.get('s').toUpperCase();
-if (['before', 'after'].includes(q.get('m'))) cfg.mode = q.get('m');
-if (q.get('missed') === '1' && cfg.scenario === 'A') cfg.webhookMissed = true;
-
-reset(); fitPhone();
-requestAnimationFrame(frame);
+st = initState(); ptrPark();
+renderAll(); fitPhone();
+const q = (new URLSearchParams(location.search).get('s') || '').toUpperCase();
+if (SCENARIOS[q]) run(q);
 })();
 </script>
 </body>
