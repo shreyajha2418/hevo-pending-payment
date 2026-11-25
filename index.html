@@ -324,6 +324,8 @@ table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-
 .m-cards{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .m-card{display:flex;gap:10px;align-items:center;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px;font-size:12.5px;color:var(--body)}
 .m-card:hover{border-color:var(--accent)}
+.m-card.sel{border-color:var(--accent);background:#FBF3EE;box-shadow:0 0 0 3px rgba(138,90,63,.15)}
+.m-card.sel b{background:var(--accent);color:#fff;border-color:var(--accent)}
 .m-card b{min-width:30px;height:24px;border-radius:7px;background:var(--soft);color:var(--accent);font-family:var(--serif);font-size:16px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
 .m-card span{flex:1}
 .m-card em{font-style:normal;font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap}
@@ -438,11 +440,11 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
     <p class="lead">A shopper pays ₹2,499 to Quirksmith by UPI. Their bank debits them, but the payment gets stuck on “pending”. Watch how the store handles it, on the shopper’s phone and in the store’s backend at the same moment.</p>
     <div class="m-step"><span class="m-num">1</span><div>
       <h4>Pick a scenario card</h4>
-      <p>The A, B1 and B2 cards on the left are the only thing you click. Each one plays a different ending. Try one now:</p>
+      <p>The A, B1 and B2 cards on the left are the only thing you click. Each one plays a different ending. Choose one here to start with:</p>
       <div class="m-cards">
-        <button class="m-card" data-wsc="A"><b>A</b><span>Payment confirmed within 2 hours</span><em>Play ▸</em></button>
-        <button class="m-card" data-wsc="B1"><b>B1</b><span>Not confirmed in 2 hours, money arrives later</span><em>Play ▸</em></button>
-        <button class="m-card" data-wsc="B2"><b>B2</b><span>Not confirmed in 2 hours, money never arrives (runs to Day 5)</span><em>Play ▸</em></button>
+        <button class="m-card" data-wsc="A"><b>A</b><span>Payment confirmed within 2 hours</span><em>Select</em></button>
+        <button class="m-card" data-wsc="B1"><b>B1</b><span>Not confirmed in 2 hours, money arrives later</span><em>Select</em></button>
+        <button class="m-card" data-wsc="B2"><b>B2</b><span>Not confirmed in 2 hours, money never arrives (runs to Day 5)</span><em>Select</em></button>
       </div></div></div>
     <div class="m-step"><span class="m-num">2</span><div>
       <h4>Sit back and watch</h4>
@@ -1008,8 +1010,20 @@ $('wSpeed').addEventListener('click', e => {
   document.querySelector('#wSpeed .try')?.classList.remove('try');
   const n = $('wNote'); n.className = 'note ok';
   n.textContent = `Speed set to ${cfg.speed}×. You can change it again from the Speed box on the left.`;
+  syncWGo();
 });
-document.querySelectorAll('[data-wsc]').forEach(b => b.addEventListener('click', () => { closeWelcome(); run(b.dataset.wsc); }));
+let wPick = null;
+function syncWGo() {
+  $('wGo').textContent = wPick ? `Start scenario ${wPick} at ${cfg.speed}× ▸` : 'Got it, show me the simulation';
+}
+document.querySelectorAll('[data-wsc]').forEach(b => b.addEventListener('click', () => {
+  wPick = b.dataset.wsc;
+  document.querySelectorAll('[data-wsc]').forEach(x => {
+    const on = x === b; x.classList.toggle('sel', on); x.querySelector('em').textContent = on ? 'Selected ✓' : 'Select';
+  });
+  syncWGo();
+}));
+$('wGo').addEventListener('click', () => { if (wPick) run(wPick); });
 syncWSpeed();
 
 st = initState(); ptrPark();
