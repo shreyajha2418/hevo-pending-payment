@@ -28,38 +28,54 @@ h1,h2,h3,h4{font-family:var(--serif);color:var(--ink);margin:0;font-weight:600}
 .topbar span{font-size:13px;color:var(--muted)}
 
 /* ---------- Main ---------- */
-main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px;padding:14px 20px 6px;min-height:0}
+main{flex:1;display:grid;grid-template-columns:300px auto minmax(0,1fr);gap:18px;padding:14px 20px 6px;min-height:0}
 .col-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 
 /* ---------- Scenario column ---------- */
-.sc-col{display:flex;flex-direction:column;gap:10px;min-height:0;overflow-y:auto}
-.sc-intro{font-size:12.5px;color:var(--body);margin:-2px 0 2px}
-.sc-card{position:relative;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:11px 13px;color:var(--body);transition:border-color .2s,box-shadow .2s,transform .15s;overflow:hidden}
+.sc-col{display:flex;flex-direction:column;gap:8px;min-height:0;overflow-y:auto;padding-right:2px}
+.sc-intro{font-size:12px;color:var(--body);margin:-2px 0 0;line-height:1.4}
+.sc-group{font-size:11px;font-weight:700;color:var(--ink);margin:4px 2px -2px;display:flex;gap:6px;align-items:center;white-space:nowrap}
+.sc-group::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.sc-card{position:relative;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:13px;padding:10px 12px;color:var(--body);transition:border-color .2s,box-shadow .2s,transform .15s;overflow:hidden}
 .sc-card:hover{border-color:var(--accent);transform:translateY(-1px)}
 .sc-card.idle-pulse{animation:cardpulse 2.4s infinite}
-.sc-card.idle-pulse:nth-child(2){animation-delay:.3s}.sc-card.idle-pulse:nth-child(3){animation-delay:.6s}
 @keyframes cardpulse{0%,100%{box-shadow:0 0 0 0 rgba(138,90,63,0)}50%{box-shadow:0 0 0 4px rgba(138,90,63,.18)}}
 .sc-card.on{border-color:var(--accent);background:#fff;box-shadow:0 6px 18px -10px rgba(138,90,63,.6)}
 .sc-top{display:flex;align-items:center;gap:10px}
-.sc-letter{width:34px;height:34px;border-radius:10px;background:var(--soft);color:var(--accent);font-family:var(--serif);font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;border:1px solid var(--line)}
+.sc-letter{min-width:34px;height:30px;padding:0 6px;border-radius:9px;background:var(--soft);color:var(--accent);font-family:var(--serif);font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;border:1px solid var(--line)}
 .sc-card.on .sc-letter{background:var(--accent);color:#fff;border-color:var(--accent)}
-.sc-title{font-weight:700;color:var(--ink);font-size:14px;line-height:1.25;flex:1;min-width:0}
-.sc-desc{font-size:12.5px;margin:6px 0 0;line-height:1.38}
-.sc-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sc-title{font-weight:700;color:var(--ink);font-size:13.5px;line-height:1.25;flex:1;min-width:0}
+.sc-state{margin-left:auto;align-self:flex-start;white-space:nowrap;padding-top:2px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sc-card.on .sc-state{color:var(--accent)}
+.sc-desc{font-size:12px;margin:5px 0 0;line-height:1.38}
+.sc-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
 .sc-meta span{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--body)}
 .sc-meta span.ok{background:var(--ok-bg);color:var(--ok)}
 .sc-meta span.bad{background:var(--alert-bg);color:var(--alert)}
-.sc-state{margin-left:auto;align-self:flex-start;white-space:nowrap;padding-top:2px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.sc-card.on .sc-state{color:var(--accent)}
+.sc-meta span.warn{background:var(--warn-bg);color:var(--warn)}
 .sc-prog{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);width:0;transition:width .4s}
 
-.now{background:var(--ink);color:#EFE7E2;border-radius:14px;padding:14px 15px;margin-top:2px}
+.opts{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.opt-l{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.seg{display:inline-flex;background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:2px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--body);padding:4px 10px;border-radius:7px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(43,37,34,.12);font-weight:600}
+.seg.mode button.on[data-mode=before]{background:var(--alert);color:#fff}
+.seg.mode button.on[data-mode=after]{background:var(--accent);color:#fff}
+.toggle{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink);cursor:pointer;user-select:none}
+.toggle input{display:none}
+.toggle .sw{width:30px;height:17px;border-radius:999px;background:var(--line-2);position:relative;transition:.2s;flex:none}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.toggle input:checked + .sw{background:var(--accent)}
+.toggle input:checked + .sw::after{left:15px}
+.toggle.disabled{opacity:.4;cursor:not-allowed}
+
+.now{background:var(--ink);color:#EFE7E2;border-radius:13px;padding:12px 14px}
 .now .nl{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#BFAFA6}
-.now .nt{font-size:14.5px;line-height:1.4;margin-top:6px;color:#fff;min-height:80px}
-.now .nbar{height:3px;background:#4A403B;border-radius:3px;margin-top:10px;overflow:hidden}
+.now .nt{font-size:14px;line-height:1.4;margin-top:6px;color:#fff;min-height:78px}
+.now .nbar{height:3px;background:#4A403B;border-radius:3px;margin-top:8px;overflow:hidden}
 .now .nbar i{display:block;height:100%;width:0;background:#D9B79F;transition:width .4s}
-.legend{font-size:11.5px;color:var(--muted);line-height:1.5;padding:0 2px}
-.legend b{color:var(--body);font-weight:600}
 
 /* ---------- Phone ---------- */
 .phone-col{display:flex;flex-direction:column;align-items:center;min-height:0}
@@ -83,6 +99,10 @@ main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px
 .btn:disabled{background:#D9CFC9;color:#8F837D}
 .pressed{transform:scale(.95)!important;filter:brightness(.88)}
 .cta-bar{padding:14px 18px 22px;border-top:1px solid var(--line);background:var(--card);flex:none}
+.skip-ov{position:absolute;inset:0;z-index:35;background:rgba(43,37,34,.55);display:flex;align-items:center;justify-content:center;animation:fade .3s}
+.skip-ov div{background:var(--card);border-radius:16px;padding:14px 22px;text-align:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.4)}
+.skip-ov b{display:block;font-family:var(--serif);font-size:34px;color:var(--ink);line-height:1.1}
+.skip-ov span{font-size:12px;color:var(--muted)}
 
 /* virtual pointer */
 .ptr{position:absolute;top:0;left:0;z-index:100;pointer-events:none;opacity:0;transition:transform .75s cubic-bezier(.45,.05,.25,1),opacity .3s;will-change:transform}
@@ -137,6 +157,7 @@ main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px
 .keys button.go{background:#2E4A7A;color:#fff;font-size:15px}
 .proc{text-align:center;padding:26px 0 18px}
 .spin{width:44px;height:44px;border-radius:50%;border:4px solid #DCE2EC;border-top-color:#2E4A7A;margin:0 auto 14px;animation:rot 1s linear infinite}
+.spin.br{border-color:#EADFD8;border-top-color:var(--accent)}
 @keyframes rot{to{transform:rotate(360deg)}}
 
 /* Notification banner */
@@ -165,6 +186,8 @@ main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px
 .state.ok .sic{background:#C6DCC9;color:var(--ok)}
 .state.bad{background:var(--alert-bg);border-color:#EBC5BF}
 .state.bad .sic{background:#EBC5BF;color:var(--alert)}
+.state.neutral{background:var(--soft);border-color:var(--line)}
+.state.neutral .sic{background:#E7DFDA;color:var(--body)}
 .promise{display:flex;gap:6px;align-items:center;font-weight:600;color:var(--warn)}
 .track{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:11px;color:var(--muted)}
 .track i{flex:1;height:3px;border-radius:3px;background:var(--line-2)}
@@ -193,8 +216,11 @@ main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px
 /* chips */
 .chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap}
 .chip.awaiting{background:var(--warn-bg);color:var(--warn)}
+.chip.notconf{background:#F1DDC2;color:#8A4F12}
 .chip.confirmed{background:var(--ok-bg);color:var(--ok)}
-.chip.refund{background:var(--alert-bg);color:var(--alert)}
+.chip.failed{background:var(--alert-bg);color:var(--alert)}
+.chip.cancelled{background:#E7DFDA;color:#6E625C}
+.chip.unmatched{background:var(--alert);color:#fff}
 .chip.open{background:#EFE3DA;color:var(--accent)}
 .chip.closed{background:#E7DFDA;color:#6E625C}
 .chip.resolved{background:var(--ok-bg);color:var(--ok)}
@@ -211,34 +237,42 @@ main{flex:1;display:grid;grid-template-columns:290px auto minmax(0,1fr);gap:18px
 .panel-h .sub{font-size:11px;color:var(--muted)}
 .be-top{display:flex;align-items:center;gap:16px}
 .be-top .tl{flex:1;min-width:0}
-.clock{font-size:30px;font-weight:700;color:var(--ink);line-height:1}
-.clock-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
+.clock-wrap{min-width:150px}
+.clock{font-size:28px;font-weight:700;color:var(--ink);line-height:1}
+.clock-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px;display:flex;gap:6px;align-items:center}
+.dayb{background:var(--ink);color:#fff;border-radius:5px;padding:1px 6px;letter-spacing:.06em}
+.dayb.skipping{background:var(--accent);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.5}}
 
 .tl-track{position:relative;height:46px;margin:2px 8px 0}
 .tl-line{position:absolute;left:0;right:0;top:20px;height:4px;background:var(--line);border-radius:4px}
 .tl-fill{position:absolute;left:0;top:20px;height:4px;background:var(--accent);border-radius:4px}
 .tl-tick{position:absolute;top:15px;width:2px;height:14px;background:var(--line-2);transform:translateX(-1px)}
 .tl-tick.ran{background:var(--accent)}
+.tl-brk{position:absolute;top:13px;width:8px;height:18px;transform:translateX(-4px) skewX(-18deg);background:var(--card);border-left:2px solid var(--line-2);border-right:2px solid var(--line-2)}
 .tl-lab{position:absolute;top:32px;font-size:10px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.tl-lab.d{font-weight:700;color:var(--body)}
 .tl-mark{position:absolute;top:0;transform:translateX(-50%);font-size:9.5px;font-weight:700;letter-spacing:.04em;white-space:nowrap;text-transform:uppercase;padding:1px 6px;border-radius:5px}
 .tl-mark::after{content:"";position:absolute;left:50%;top:15px;width:2px;height:13px;transform:translateX(-1px);background:currentColor}
 .tl-mark.deadline{color:var(--ink);background:#E7DFDA}
 .tl-mark.ok{color:var(--ok);background:var(--ok-bg)}
+.tl-mark.bad{color:var(--alert);background:var(--alert-bg)}
+.tl-mark.warn{color:var(--warn);background:var(--warn-bg)}
 .tl-cur{position:absolute;top:13px;width:14px;height:18px;transform:translateX(-7px)}
 .tl-cur::before{content:"";position:absolute;left:3px;top:3px;width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--ink)}
 
 table.orders{width:100%;border-collapse:collapse;font-size:13px}
 table.orders th{text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:4px 8px 6px;border-bottom:1px solid var(--line)}
 table.orders td{padding:10px 8px;color:var(--ink)}
-table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;white-space:nowrap}
 .empty{color:var(--muted);font-size:13px;padding:8px;font-style:italic}
 
-.be-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px}
+.be-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:12px}
 .logp{display:flex;flex-direction:column;min-height:0}
 .loglist{flex:1;overflow-y:auto;min-height:0;margin:0 -6px}
-.lrow{display:grid;grid-template-columns:60px 70px 1fr;gap:8px;align-items:baseline;padding:6px;border-radius:7px;font-size:12.5px;color:var(--ink)}
+.lrow{display:grid;grid-template-columns:82px 68px 1fr;gap:8px;align-items:baseline;padding:6px;border-radius:7px;font-size:12.5px;color:var(--ink)}
 .lrow+.lrow{border-top:1px solid #EFE7E2}
-.lrow .lt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--muted)}
+.lrow .lt{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--muted);white-space:nowrap}
 .lrow .src{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-align:center;padding:2px 0;border-radius:4px;background:#EFE7E2;color:var(--body)}
 .src.ORDER{background:#EFE3DA;color:var(--accent)}
 .src.RAZORPAY{background:#E3E8F1;color:#33507E}
@@ -248,8 +282,10 @@ table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-
 .lrow.ok .msg{color:var(--ok);font-weight:600}
 .lrow.err{background:var(--alert-bg)}
 .lrow.err .msg{color:var(--alert);font-weight:700}
+.lrow.warn .msg{color:var(--warn);font-weight:600}
 .lrow.muted .msg{color:var(--muted)}
 .lrow.new{animation:newrow 1.6s}
+.lrow.err.new{animation:none}
 @keyframes newrow{from{background:#F3E6D3}}
 
 .side{display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto}
@@ -263,9 +299,14 @@ table.orders .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-
 .cron-stats b{display:block;font-size:16px;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
 .cron-runs{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
 .cron-runs span{font-size:10.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;padding:2px 6px;border-radius:5px;background:#EAE4F0;color:#5D4A7A}
+.cron-runs span.hit{background:var(--ok-bg);color:var(--ok);font-weight:700}
+.cron-runs span.plain{background:transparent;color:var(--muted);padding:2px 0;font-family:var(--sans)}
+.rule{font-size:12px;color:var(--body);background:var(--soft);border-radius:8px;padding:8px 10px;margin-top:6px}
+.rule.bad{background:var(--alert-bg);color:var(--alert)}
 
 .outcome{border-radius:14px;padding:12px 16px;display:flex;gap:14px;align-items:flex-start;animation:fade .5s}
 .outcome.good{background:var(--ok-bg);border:1px solid #C6DCC9}
+.outcome.bad{background:var(--alert-bg);border:1px solid #EBC5BF}
 .outcome h4{font-size:20px}
 .outcome p{margin:3px 0 0;font-size:13px;color:var(--ink)}
 .outcome ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;color:var(--body)}
@@ -291,19 +332,25 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
   <!-- Scenario chooser -->
   <section class="sc-col">
     <div class="col-label" style="margin-bottom:0"><span>Choose a scenario</span></div>
-    <p class="sc-intro">Every scenario starts the same way: a shopper pays ₹2,499 by UPI at 10:00, the bank debits them, but the payment stays “pending”. Pick how it ends:</p>
-    <div id="scCards" style="display:flex;flex-direction:column;gap:10px"></div>
+    <p class="sc-intro">All three start the same: at 10:00 on Day 0 a shopper pays ₹2,499 by UPI, the bank debits them, but the payment stays “pending”. Pick how it ends:</p>
+    <div id="scCards" style="display:flex;flex-direction:column;gap:8px"></div>
+    <div class="opts">
+      <div class="opt"><span class="opt-l">View</span>
+        <div class="seg mode" id="modeSeg"><button data-mode="before">Before (today)</button><button data-mode="after">After (fix)</button></div></div>
+      <div class="opt"><span class="opt-l">Speed</span>
+        <div class="seg" id="spSeg"><button data-sp="1">1×</button><button data-sp="5">5×</button><button data-sp="20">20×</button></div></div>
+      <div class="opt"><label class="toggle" id="whToggle"><input type="checkbox" id="whMissed"><span class="sw"></span>Webhook missed <span class="small">(scenario A)</span></label></div>
+    </div>
     <div class="now">
-      <div class="nl"><span id="nowStep">Waiting</span><span class="tnum" id="nowClock">10:00</span></div>
+      <div class="nl"><span id="nowStep">Waiting</span><span class="tnum" id="nowClock">Day 0 · 10:00</span></div>
       <div class="nt" id="nowText"></div>
       <div class="nbar"><i id="nowBar"></i></div>
     </div>
-    <p class="legend"><b>Left:</b> the shopper’s phone. The pointer plays the shopper. <b>Right:</b> what the store’s backend does at the same moment. Both run on one simulated clock, so nothing makes you wait in real time.</p>
   </section>
 
   <!-- Phone -->
   <section class="phone-col">
-    <div class="col-label"><span>Customer’s phone</span></div>
+    <div class="col-label"><span>Customer’s phone</span><span class="tnum" id="phoneDay">Day 0</span></div>
     <div class="phone-holder" id="phoneHolder">
       <div class="phone-scale" id="phoneScale">
         <div class="phone" id="phone">
@@ -323,6 +370,7 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
             </div>
             <div id="phoneMain" style="flex:1;min-height:0;display:flex;flex-direction:column"></div>
             <div id="upiLayer"></div>
+            <div id="skipLayer"></div>
             <div id="bannerLayer"></div>
           </div>
           <div class="ptr" id="ptr"><svg width="30" height="34" viewBox="0 0 30 34"><path d="M3 3 L3 27 L9.5 21 L14 31 L18.5 29 L14 19.5 L23 19.5 Z" fill="#fff" stroke="#1E1A18" stroke-width="2" stroke-linejoin="round"/></svg></div>
@@ -333,17 +381,17 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
 
   <!-- Backend -->
   <section class="be">
-    <div class="col-label"><span>Store backend · ops console</span></div>
+    <div class="col-label"><span>Store backend · ops console</span><span id="modePill"></span></div>
     <div class="be-body">
       <div class="panel be-top">
-        <div>
-          <div class="clock-l">Simulated clock</div>
+        <div class="clock-wrap">
+          <div class="clock-l"><span>Simulated clock</span><span class="dayb" id="beDay">Day 0</span></div>
           <div class="clock tnum" id="beClock">10:00:00</div>
         </div>
         <div class="tl"><div class="tl-track" id="tl"></div></div>
       </div>
       <div class="panel">
-        <div class="panel-h"><h4>Orders</h4><span class="sub">Silver Lane (demo store) · today</span></div>
+        <div class="panel-h"><h4>Orders</h4><span class="sub">Silver Lane (demo store)</span></div>
         <div id="ordersBox"></div>
       </div>
       <div id="outcomeBox"></div>
@@ -371,33 +419,38 @@ footer{padding:6px 20px 10px;font-size:11.5px;color:var(--muted)}
 const ORDER_ID = 'SL-10482', TICKET_ID = 'QS-4821', AMT = '₹2,499';
 const CUSTOMER = { name: 'Ananya Rao', phone: '+91 98765 43210' };
 const UPI_REF = '402188361175';
-const T = (h, m, s = 0) => h * 3600 + m * 60 + s;
-const START = T(10, 0, 0), DEADLINE = T(12, 0, 0);
-const RATE = 330;            // simulated seconds per real second (≈5.5 sim minutes / s)
-const DWELL = 2600;          // real ms to read each step
-const DWELL_CRON = 1300;     // routine cron checks go quicker
+const DAY = 86400;
+const T = (h, m, s = 0, d = 0) => d * DAY + h * 3600 + m * 60 + s;
+const START = T(10, 0), DEADLINE = T(12, 0), WINDOW_END = T(10, 0, 0, 3), T5 = T(10, 0, 0, 5);
+const RATE = { 1: 60, 5: 300, 20: 1200 };            // simulated seconds per real second (gaps of a few hours)
+const SKIP_MS = { 1: 4200, 5: 2800, 20: 1500 };      // real ms to fast-forward a multi-day gap
+const DWELL_K = { 1: 1.35, 5: 1, 20: 0.55 };         // reading-time multiplier per speed
+const DWELL = 2600, DWELL_CRON = 1300;
 const pad = n => String(n).padStart(2, '0');
-const hms = t => `${pad(Math.floor(t / 3600))}:${pad(Math.floor(t / 60) % 60)}:${pad(Math.floor(t) % 60)}`;
-const hm = t => `${pad(Math.floor(t / 3600))}:${pad(Math.floor(t / 60) % 60)}`;
+const dayOf = t => Math.floor(t / DAY);
+const hms = t => { const x = t % DAY; return `${pad(Math.floor(x / 3600))}:${pad(Math.floor(x / 60) % 60)}:${pad(Math.floor(x) % 60)}`; };
+const hm = t => { const x = t % DAY; return `${pad(Math.floor(x / 3600))}:${pad(Math.floor(x / 60) % 60)}`; };
+const dhm = t => `Day ${dayOf(t)} · ${hm(t)}`;
 const $ = id => document.getElementById(id);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const SCENARIOS = {
-  A: { title: 'Payment arrives late, within 2 hours',
-       desc: 'The bank confirms at 10:40. The order is confirmed, the ticket closes itself and the shopper is notified.',
-       meta: [['Pending 10:00'], ['Captured 10:40', 'ok']] },
-  B: { title: 'No payment by the 2-hour mark',
-       desc: 'Nothing arrives by 12:00. The shopper is told the money returns in 3–5 days, and Pay is unlocked again.',
-       meta: [['Pending 10:00'], ['Refund message 12:00', 'bad']] },
-  C: { title: 'Payment arrives after 2 hours',
-       desc: 'The shopper hears “money back in 3–5 days” at 12:00, then the payment lands at 13:10. The order is confirmed anyway.',
-       meta: [['Refund message 12:00', 'bad'], ['Captured 13:10', 'ok']] },
+  A:  { group: null, title: 'Confirmed within 2 hours',
+        desc: 'The bank confirms at 10:40. The order is confirmed, the ticket closes itself and the shopper is notified.',
+        meta: [['Day 0 · 10:40 captured', 'ok']] },
+  B1: { group: 'B · Not confirmed within 2 hours, then…', title: '…the money arrives later',
+        desc: 'Honest update at 12:00, ticket kept open. The payment lands at 13:10, inside Razorpay’s 3-day window, and the order is placed.',
+        meta: [['12:00 · 2 h passed', 'warn'], ['13:10 captured', 'ok']] },
+  B2: { group: null, title: '…the money never arrives',
+        desc: 'Honest update at 12:00. The capture window ends on Day 3; on Day 5 the ticket auto-closes, as the shopper’s bank returns the money.',
+        meta: [['12:00 · 2 h passed', 'warn'], ['Day 3 window ends'], ['Day 5 closed', 'bad']] },
 };
 
 const ICON = {
   clock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5 9-10"/></svg>',
-  back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></svg>',
+  x: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  bank: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10 12 4l9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>',
   lock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
   shield: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/></svg>',
 };
@@ -412,42 +465,52 @@ const RING = (w = 180) => `<svg width="${w}" height="${w}" viewBox="0 0 200 200"
   <path d="M93 52l7-6 7 6-7 10z" fill="#fff" opacity=".6"/></svg>`;
 
 /* ================= State ================= */
+const cfg = { mode: 'after', webhookMissed: false, speed: 5 };
 let scenario = null, st, steps = [], stepIdx = 0, runId = 0, done = false;
 let logSeq = 0, lastSeenLog = 0, bannerTimer = null, shownBanner = null, phoneScale = 1;
 
 function initState() {
   logSeq = 0; lastSeenLog = 0;
   return {
-    t: START, phone: { screen: 'product', upi: null, pin: '', status: null },
-    order: null, ticket: null, logs: [], cronRuns: [], marks: [],
-    banner: null, outcome: null, payLocked: false, title: null,
+    t: START, phone: { screen: 'product', upi: null, pin: '', status: null, pay: null },
+    order: null, ticket: null, logs: [], marks: [], cronStop: null, cronHit: null,
+    banner: null, outcome: null, title: null, no: 0, skipping: false,
   };
 }
+const after = () => cfg.mode === 'after';
+const missed = () => cfg.webhookMissed && scenario === 'A';
 
 /* ================= Step helpers ================= */
 function log(s, src, msg, kind = '', off = 0) { s.logs.push({ id: ++logSeq, t: s.t + off, src, msg, kind }); }
 function banner(s, b) { s.banner = { ...b, id: Math.random() }; }
 function say(s, who, text, off = 0) { s.ticket.thread.push({ t: s.t + off, who, text }); }
+function mark(s, label, kind) { s.marks.push({ t: s.t, label, kind }); }
+function cronCount(s) {
+  if (!after() || !s.order) return 0;
+  const end = Math.min(s.t, s.cronStop ?? Infinity);
+  return Math.max(0, Math.floor((end - START) / 900));
+}
+const cronWatching = s => after() && !!s.order && s.cronStop === null;
 
 function confirmOrder(s, late) {
-  s.order.status = 'confirmed'; s.order.flash = true; s.payLocked = false;
+  s.order.status = 'confirmed'; s.order.flash = true; s.phone.pay = null; s.cronStop = s.t;
   log(s, 'ORDER', late ? 'Late payment captured → order placed, customer updated' : `Order ${ORDER_ID}: AWAITING PAYMENT → CONFIRMED`, 'ok');
   s.ticket.status = 'closed'; s.ticket.updated = late;
   say(s, 'Priya', late
-    ? `Good news: your payment came through at ${hm(s.t)}. Order ${ORDER_ID} is confirmed, so there’s no refund to wait for. We’ll share tracking once it ships.`
+    ? `Good news: your payment came through at ${hm(s.t)}. Order ${ORDER_ID} is confirmed and we’ll share tracking once it ships. Closing this ticket; reply here any time.`
     : `Good news: your payment of ${AMT} is confirmed and order ${ORDER_ID} is placed. Closing this ticket. Reply here any time.`, 2);
-  log(s, 'TICKET', late ? `Ticket ${TICKET_ID} updated: late payment, order confirmed (closed)` : `Ticket ${TICKET_ID} → CLOSED (auto, payment confirmed)`, '', 2);
+  log(s, 'TICKET', late ? `Ticket ${TICKET_ID} updated with late payment, then CLOSED` : `Ticket ${TICKET_ID} → CLOSED (auto, payment confirmed)`, '', 2);
   log(s, 'NOTIFY', `Customer notified: push + SMS + ticket thread (“${late ? 'payment came through' : 'Payment received'}”)`, '', 3);
   s.phone.status = late ? 'lateConfirmed' : 'confirmed';
   banner(s, { kind: 'store', from: 'Silver Lane', text: late
     ? `Good news: your payment came through. Order ${ORDER_ID} is confirmed.`
     : `Payment received. Order ${ORDER_ID} confirmed.` });
-  s.marks.push({ t: s.t, label: late ? 'Late capture' : 'Captured', kind: 'ok' });
+  mark(s, late ? 'Late capture' : (missed() ? 'Cron found it' : 'Captured'), 'ok');
 }
 
 /* ================= Script ================= */
 function buildSteps(sc) {
-  const S = [];
+  const S = [], A = after();
   const add = (t, title, run, opt = {}) => S.push({ t, title, run, ...opt });
 
   add(T(10, 0, 2), 'The shopper likes the silver ring and taps “Add to cart”.',
@@ -463,11 +526,16 @@ function buildSteps(sc) {
   add(T(10, 0, 17), 'The bank debits ₹2,499 and an SMS arrives. As far as the shopper is concerned, they have paid…', s => {
     banner(s, { kind: 'sms', from: 'DM-DEMOBK', text: `₹2,499 debited from A/c XX1234 for UPI txn. Ref ${UPI_REF}. Not you? Call 1800-000-0000.` });
   });
-  add(T(10, 0, 20), '…but Razorpay only says “pending”. The store shows an honest pending screen with a time promise, and locks Pay so they can’t pay twice.', s => {
+  add(T(10, 0, 20), A
+      ? '…but Razorpay only says “pending”. The store shows an honest pending screen with a time promise, and locks Pay so they can’t pay twice.'
+      : '…but Razorpay only says “pending”. Today the store just shows a spinner, and the Retry button stays live: a double-payment risk.', s => {
     log(s, 'RAZORPAY', 'Razorpay: payment pending');
-    s.phone.upi = null; s.phone.screen = 'status'; s.phone.status = 'pending';
-    s.payLocked = true; log(s, 'ORDER', `Pay button locked for ${ORDER_ID} while payment is pending`, 'muted');
+    s.phone.upi = null; s.phone.screen = 'status'; s.phone.status = A ? 'pending' : 'processing';
+    if (A) { s.phone.pay = 'locked'; log(s, 'ORDER', `Pay button locked for ${ORDER_ID} while payment is pending`, 'muted'); }
   }, { dwell: 3400 });
+
+  if (!A) return buildBefore(sc, S, add);
+
   add(T(10, 1, 30), 'They tap “Yes, it was debited”. A ticket is auto-created with every detail filled in, and agent Priya is assigned.', s => {
     s.ticket = { status: 'open', created: s.t, thread: [] };
     say(s, 'System', 'Ticket created from the order page (“Money debited? Yes”). Details auto-filled.');
@@ -477,60 +545,139 @@ function buildSteps(sc) {
     log(s, 'NOTIFY', 'Ticket acknowledgement sent to customer (SMS + email)', 'muted', 4);
   }, { tap: 'debitedYes', dwell: 3400 });
 
-  const cron = (t, late) => add(t, late
-      ? `${hm(t)} safety-net check: still watching Razorpay for a late payment after the refund message.`
-      : `${hm(t)} safety-net check (every 15 min): Razorpay still says pending. Pay stays locked.`, s => {
-    s.cronRuns.push(t);
-    log(s, 'CRON', late ? `Cron: late-capture watch for ${ORDER_ID} → nothing yet` : `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
-  }, { cron: true, dwell: DWELL_CRON });
+  const cron = t => add(t, `${hm(t)} safety-net check (every 15 min): Razorpay still says pending. The ticket stays open; Pay stays locked.`, s => {
+    log(s, 'CRON', `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
+  }, { dwell: DWELL_CRON });
 
   if (sc === 'A') {
     cron(T(10, 15)); cron(T(10, 30));
-    add(T(10, 40, 0), '10:40: the bank finally confirms. Razorpay’s webhook sends payment.authorized…', s => {
-      log(s, 'RAZORPAY', 'Razorpay webhook: payment.authorized');
-    });
-    add(T(10, 40, 3), '…then payment.captured. The order is confirmed, the ticket closes itself, and the shopper gets a notification.', s => {
-      log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
-      confirmOrder(s, false);
-    }, { dwell: 3400 });
+    if (!missed()) {
+      add(T(10, 40, 0), '10:40: the bank confirms. Razorpay’s webhook sends payment.authorized…', s => {
+        log(s, 'RAZORPAY', 'Razorpay webhook: payment.authorized');
+      });
+      add(T(10, 40, 3), '…then payment.captured. The order is confirmed, the ticket closes itself, and the shopper gets a notification.', s => {
+        log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
+        confirmOrder(s, false);
+      }, { dwell: 3400 });
+    } else {
+      add(T(10, 40, 0), '10:40: Razorpay captures the payment, but the webhook to the store fails. The store doesn’t know yet.', s => {
+        log(s, 'RAZORPAY', 'payment.captured at Razorpay · webhook delivery failed (simulated)', 'warn');
+        mark(s, 'Webhook lost', 'warn');
+      });
+      add(T(10, 45, 0), '10:45: the safety-net check asks Razorpay directly, finds the capture, and places the order. Only 5 minutes lost.', s => {
+        s.cronHit = s.t;
+        log(s, 'CRON', 'Cron: Razorpay says captured → order placed', 'ok');
+        confirmOrder(s, false);
+      }, { dwell: 3400 });
+    }
   } else {
     for (let m = 15; m < 120; m += 15) cron(START + m * 60);
-    add(DEADLINE, '12:00: two hours are up and no payment has arrived. The shopper is told plainly what happens next, and Pay is unlocked.', s => {
-      s.cronRuns.push(s.t);
+    add(DEADLINE, '12:00: two hours are up and the money hasn’t reached the store. The shopper gets an honest update. Nothing is refunded, because the store never received the money; the ticket stays open.', s => {
       log(s, 'CRON', `Cron: checked Razorpay for ${ORDER_ID} → still pending`, 'muted');
-      s.order.status = 'refund'; s.order.flash = true;
-      log(s, 'ORDER', `${ORDER_ID}: AWAITING PAYMENT → NOT RECEIVED: REFUND EXPECTED`, 'err', 1);
-      log(s, 'TICKET', '2-hour window passed, customer told money returns in 3–5 days', '', 2);
-      s.ticket.status = 'closed';
-      say(s, 'Priya', `We couldn’t confirm your payment within 2 hours. Your bank will return ${AMT} in 3–5 days. If it comes through instead, we’ll confirm your order and tell you right here.`, 2);
-      log(s, 'NOTIFY', 'Customer notified: push + SMS (“money back in 3–5 days”)', '', 3);
-      s.payLocked = false;
-      log(s, 'ORDER', 'Pay button re-enabled for customer', 'muted', 3);
-      s.phone.status = 'refund';
-      banner(s, { kind: 'store', from: 'Silver Lane', text: 'We couldn’t confirm your payment. Your money will be back in 3–5 days.' });
-    }, { cron: true, dwell: 3600 });
-    if (sc === 'C') {
-      for (let m = 135; m <= 180; m += 15) cron(START + m * 60, true);
-      add(T(13, 10, 0), '13:10: the payment finally lands. Instead of becoming “unmatched money”, it’s matched to SL-10482, the order is placed and the shopper is told.', s => {
+      s.order.status = 'notconf'; s.order.flash = true;
+      log(s, 'ORDER', `${ORDER_ID}: AWAITING PAYMENT → NOT CONFIRMED (2 H PASSED)`, 'warn', 1);
+      log(s, 'TICKET', '2-hour window passed, honest update sent, ticket kept open', '', 2);
+      say(s, 'Priya', 'We haven’t received your payment yet. If it reaches us, we’ll place your order and tell you here. If it failed, your bank returns the money within 5 days. This ticket stays open until then.', 2);
+      log(s, 'NOTIFY', 'Customer notified: push + SMS + ticket thread (“haven’t received it yet”)', '', 3);
+      s.phone.status = 'notConfirmed';
+      banner(s, { kind: 'store', from: 'Silver Lane', text: 'We haven’t received your payment yet. If it reaches us, we’ll place your order.' });
+    }, { dwell: 4400 });
+    for (let m = 135; m <= 180; m += 15) cron(START + m * 60);
+
+    if (sc === 'B1') {
+      add(T(13, 10, 0), '13:10: the payment finally lands, well inside Razorpay’s 3-day capture window. It is matched to SL-10482, the order is placed, and the ticket is updated then closed.', s => {
         log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured (late)');
         confirmOrder(s, true);
-      }, { dwell: 3600 });
+      }, { dwell: 4000 });
+    } else {
+      add(T(10, 0, 0, 1), 'Skipping ahead to Day 1. The cron kept checking every 15 minutes overnight. Still pending; the ticket stays open.', s => {
+        log(s, 'CRON', `Cron: ${Math.floor((s.t - T(13, 0)) / 900)} more checks since Day 0 13:00 → still pending`, 'muted');
+      }, { dwell: 2600 });
+      add(T(10, 0, 0, 2), 'Day 2: still nothing from Razorpay. The cron keeps watching.', s => {
+        log(s, 'CRON', 'Cron: 96 checks in the last 24 h → still pending', 'muted');
+      }, { dwell: 2200 });
+      add(WINDOW_END, 'Day 3: Razorpay’s 3-day capture window has ended with no payment captured. This payment can no longer reach the store, so the cron stops watching.', s => {
+        log(s, 'CRON', 'Cron: 96 checks in the last 24 h → still pending', 'muted');
+        log(s, 'RAZORPAY', 'Razorpay capture window ended, no payment captured', 'warn', 1);
+        log(s, 'CRON', `Cron: stopped watching ${ORDER_ID} (capture window over)`, 'muted', 2);
+        s.cronStop = s.t; mark(s, 'Window ends', 'warn');
+      }, { dwell: 3800 });
+      add(T5, 'Day 5 (T+5): the ticket auto-closes. The shopper is told their own bank should already have returned the ₹2,499, with a one-reply path if it hasn’t.', s => {
+        s.order.status = 'failed'; s.order.flash = true;
+        log(s, 'ORDER', `${ORDER_ID}: NOT CONFIRMED → CLOSED (PAYMENT FAILED)`, 'err');
+        s.ticket.status = 'closed';
+        say(s, 'Priya', `Your bank should have returned ${AMT} to your account by now. If you haven’t received it, reply here with your UPI reference and we’ll help.`, 1);
+        log(s, 'TICKET', 'T+5 reached, ticket auto-closed', '', 1);
+        log(s, 'NOTIFY', 'Customer notified: push + SMS + ticket thread (“bank should have returned it”)', '', 2);
+        s.phone.status = 'failedClosed'; s.phone.pay = 'again';
+        banner(s, { kind: 'store', from: 'Silver Lane', text: `Your bank should have returned ${AMT} to your account by now.` });
+        mark(s, 'T+5 closed', 'bad');
+      }, { dwell: 4400 });
     }
   }
   add(S[S.length - 1].t + 20, 'Done. See the outcome summary on the right, or pick another scenario.', s => { s.outcome = outcomeFor(sc); });
   return S;
 }
 
+function buildBefore(sc, S, add) {
+  add(T(10, 15, 0), '10:15: today’s rule auto-cancels any order still unpaid after 15 minutes, even though the money has left the shopper’s account.', s => {
+    log(s, 'ORDER', `Auto-cancel rule: unpaid after 15 min → ${ORDER_ID} CANCELLED`, 'err');
+    s.order.status = 'cancelled'; s.order.flash = true;
+    s.phone.status = 'cancelled';
+    banner(s, { kind: 'store', from: 'Silver Lane', text: `Your order ${ORDER_ID} has been cancelled. Payment not received.` });
+    mark(s, 'Auto-cancel', 'bad');
+  }, { dwell: 3400 });
+  const PT = sc === 'A' ? T(10, 40) : sc === 'B1' ? T(13, 10) : null;
+  if (PT && missed()) {
+    add(PT, `${hm(PT)}: Razorpay captures the payment but the webhook fails, and nothing re-checks. The store never finds out.`, s => {
+      log(s, 'RAZORPAY', 'payment.captured at Razorpay · webhook delivery failed (simulated)', 'warn');
+      log(s, 'ORDER', 'No safety-net check exists → store never learns about this payment', 'err', 1);
+      mark(s, 'Lost', 'bad');
+    }, { dwell: 3400 });
+  } else if (PT) {
+    add(PT, `${hm(PT)}: the payment is captured, but the order is already cancelled. ₹2,499 is now unmatched money, and the shopper still only sees “Order cancelled”.`, s => {
+      log(s, 'RAZORPAY', 'Razorpay webhook: payment.captured');
+      log(s, 'ORDER', 'No matching active order: money unmatched', 'err', 1);
+      s.order.unmatched = true; s.order.flash = true;
+      mark(s, 'Unmatched', 'bad');
+    }, { dwell: 3600 });
+  } else {
+    add(WINDOW_END, 'Day 3: Razorpay’s capture window ends. The store isn’t watching, and the shopper hasn’t heard a word since “Order cancelled”.', s => {
+      log(s, 'RAZORPAY', 'Razorpay capture window ended, no payment captured (no one watching this order)', 'muted');
+      mark(s, 'Window ends', 'warn');
+    }, { dwell: 3200 });
+    add(T5, 'Day 5: still silence. Nobody ever told the shopper where their ₹2,499 went or who to ask.', s => {
+      mark(s, 'Silence', 'bad');
+    }, { dwell: 3200 });
+  }
+  add(S[S.length - 1].t + 20, 'Done. See the outcome summary on the right. Switch View to “After (fix)” to compare.', s => { s.outcome = outcomeFor(sc); });
+  return S;
+}
+
 function outcomeFor(sc) {
-  if (sc === 'A') return { h: 'Order confirmed at 10:40',
+  if (!after()) {
+    if (sc === 'B2') return { good: false, h: 'Before: debited, cancelled, and left in the dark',
+      p: 'The order was cancelled at 10:15 while the money had already left the shopper’s account.',
+      li: ['No pending explanation, no time promise', 'No way to raise a ticket from the order page', 'Never told what happened to the ₹2,499'] };
+    if (missed()) return { good: false, h: 'Before: the payment is lost to the store',
+      p: 'The webhook failed and nothing re-checks Razorpay, so the captured payment is never matched.',
+      li: ['Order cancelled at 10:15', '₹2,499 captured but invisible to the store', 'Shopper sees “Order cancelled” with no help option'] };
+    return { good: false, h: 'Before: ₹2,499 captured, order cancelled, money unmatched',
+      p: `The order auto-cancelled at 10:15. When the payment was captured at ${sc === 'A' ? '10:40' : '13:10'} there was nothing to attach it to.`,
+      li: ['Needs manual reconciliation', 'Retry button stayed live: double-payment risk', 'Shopper sees “Order cancelled” with no help option'] };
+  }
+  if (sc === 'A' && !missed()) return { good: true, h: 'Order confirmed at 10:40',
     p: 'The late payment was matched to the still-open order as soon as Razorpay confirmed it.',
     li: ['Pay was locked the whole time: no double payment', 'Ticket opened in one tap and closed itself', 'Shopper told what was happening at every step'] };
-  if (sc === 'B') return { h: 'A clear answer at the 2-hour mark',
-    p: 'No payment arrived, so at 12:00 the shopper was told the money returns in 3–5 days and Pay was unlocked.',
-    li: ['Promise kept: an answer within 2 hours', 'Ticket closed with a written explanation', 'Shopper can reorder whenever they like'] };
-  return { h: 'A late payment still became an order',
-    p: 'The shopper heard “money back in 3–5 days” at 12:00, but the payment landed at 13:10. It was matched to SL-10482 instead of becoming unmatched money.',
-    li: ['Order confirmed, no refund needed', 'Ticket thread and notification kept the shopper updated', 'No manual reconciliation'] };
+  if (sc === 'A') return { good: true, h: 'The safety net caught a missed webhook',
+    p: 'The webhook never arrived, but the 10:45 check asked Razorpay directly and placed the order.',
+    li: ['5 minutes lost instead of a lost order', 'No manual reconciliation', 'Ticket closed and shopper notified automatically'] };
+  if (sc === 'B1') return { good: true, h: 'A late payment still became an order',
+    p: 'At 12:00 the shopper got an honest “not received yet” update and the ticket stayed open. When the money landed at 13:10 it was matched to SL-10482.',
+    li: ['No refund promised for money the store never had', 'Ticket updated, then closed', 'No manual reconciliation'] };
+  return { good: true, h: 'Closed honestly on Day 5',
+    p: 'The money never reached the store. The ticket stayed open through Razorpay’s 3-day window, then closed on Day 5, explaining that the shopper’s own bank returns the money.',
+    li: ['Never claimed the store or Razorpay was refunding', 'Shopper updated at 12:00 and on Day 5', 'One-reply path if the bank hasn’t returned it'] };
 }
 
 /* ================= Virtual pointer ================= */
@@ -553,9 +700,7 @@ async function ptrClick(el, alive) {
   await sleep(120);
   return alive();
 }
-function ptrPark() {
-  ptr.style.transform = 'translate(300px, 640px)';
-}
+const ptrPark = () => { ptr.style.transform = 'translate(300px, 640px)'; };
 async function doTap(key, alive) {
   if (key === 'pin') {
     for (const d of '2580') {
@@ -573,13 +718,18 @@ async function doTap(key, alive) {
 
 /* ================= Runner ================= */
 function advanceTo(target, alive) {
+  const gap = target - st.t;
+  const skip = gap > 4 * 3600;
+  if (skip) { st.skipping = true; renderSkip(); }
   return new Promise(res => {
     let last = performance.now();
     const f = now => {
       if (!alive()) return res();
-      st.t = Math.min(target, st.t + (now - last) / 1000 * RATE); last = now;
+      const rate = skip ? gap / (SKIP_MS[cfg.speed] / 1000) : RATE[cfg.speed];
+      st.t = Math.min(target, st.t + (now - last) / 1000 * rate); last = now;
       renderClock();
-      if (st.t >= target) res(); else requestAnimationFrame(f);
+      if (st.t >= target) { if (skip) { st.skipping = false; renderSkip(); } res(); }
+      else requestAnimationFrame(f);
     };
     requestAnimationFrame(f);
   });
@@ -591,33 +741,33 @@ async function run(sc) {
   st = initState(); steps = buildSteps(sc); stepIdx = 0;
   clearTimeout(bannerTimer); $('bannerLayer').innerHTML = ''; shownBanner = null;
   ptr.classList.remove('show'); ptrPark();
-  renderAll();
+  renderAll(); renderSkip();
   await sleep(700);
   for (const step of steps) {
     if (!alive()) return;
     if (step.tap) {
-      // show what is about to happen while the pointer moves
       st.title = step.title; st.no = stepIdx + 1; renderNow();
       if (!(await doTap(step.tap, alive))) return;
     }
     await advanceTo(step.t, alive); if (!alive()) return;
     st.t = step.t; step.run(st); st.title = step.title; stepIdx++; st.no = stepIdx;
-    if (step.tap === 'debitedYes') { ptr.classList.remove('show'); }
+    if (step.tap === 'debitedYes' || (step.tap === 'pin' && !after())) ptr.classList.remove('show');
     renderAll();
-    await sleep(step.dwell || DWELL);
+    await sleep((step.dwell || DWELL) * DWELL_K[cfg.speed]);
   }
   if (alive()) { done = true; renderCards(); renderNow(); }
 }
 
 /* ================= Rendering ================= */
-function renderAll() { renderCards(); renderNow(); renderPhone(); renderUpi(); renderBanner(); renderBackend(); renderClock(); }
+function renderAll() { renderCards(); renderOpts(); renderNow(); renderPhone(); renderUpi(); renderBanner(); renderBackend(); renderClock(); }
 
 function renderCards() {
   $('scCards').innerHTML = Object.entries(SCENARIOS).map(([k, v]) => {
     const on = k === scenario;
     const state = on ? (done ? 'Replay ↺' : 'Playing') : 'Play ▸';
     const prog = on ? (stepIdx / steps.length * 100) : 0;
-    return `<button class="sc-card${on ? ' on' : ''}${scenario ? '' : ' idle-pulse'}" data-sc="${k}">
+    return `${v.group ? `<div class="sc-group">${v.group}</div>` : ''}
+      <button class="sc-card${on ? ' on' : ''}${scenario ? '' : ' idle-pulse'}" data-sc="${k}">
       <div class="sc-top"><span class="sc-letter">${k}</span><span class="sc-title">${v.title}</span><span class="sc-state">${state}</span></div>
       <p class="sc-desc">${v.desc}</p>
       <div class="sc-meta">${v.meta.map(([t, c]) => `<span class="${c || ''}">${t}</span>`).join('')}</div>
@@ -625,27 +775,127 @@ function renderCards() {
   }).join('');
 }
 
+function renderOpts() {
+  document.querySelectorAll('#modeSeg button').forEach(b => b.classList.toggle('on', b.dataset.mode === cfg.mode));
+  document.querySelectorAll('#spSeg button').forEach(b => b.classList.toggle('on', +b.dataset.sp === cfg.speed));
+  const ok = scenario === 'A' || scenario === null;
+  $('whToggle').classList.toggle('disabled', !ok); $('whMissed').disabled = !ok; $('whMissed').checked = cfg.webhookMissed && ok;
+  $('modePill').innerHTML = `<span class="chip ${after() ? 'open' : 'failed'}">${after() ? 'After · with the fix' : 'Before · today’s behaviour'}</span>`;
+}
+
 function renderNow() {
   if (!scenario) {
     $('nowStep').textContent = 'Ready';
-    $('nowText').textContent = 'Pick scenario A, B or C above. The whole story then plays by itself.';
+    $('nowText').textContent = 'Pick scenario A, B1 or B2 above. The whole story then plays by itself.';
     $('nowBar').style.width = '0%'; return;
   }
-  $('nowStep').textContent = done ? `Scenario ${scenario} · done` : `Scenario ${scenario} · step ${Math.max(1, st.no || 0)} of ${steps.length}`;
+  $('nowStep').textContent = done ? `Scenario ${scenario} · done` : `Scenario ${scenario} · step ${Math.max(1, st.no)} of ${steps.length}`;
   $('nowText').textContent = st.title || 'Starting…';
   $('nowBar').style.width = `${stepIdx / steps.length * 100}%`;
 }
 
 function renderClock() {
   $('beClock').textContent = hms(st.t);
+  $('beDay').textContent = `Day ${dayOf(st.t)}`;
   $('sbTime').textContent = hm(st.t);
-  $('nowClock').textContent = hm(st.t);
-  const [a, b] = tlRange();
-  const pct = Math.max(0, Math.min(100, (st.t - a) / (b - a) * 100));
-  if ($('tlCur')) $('tlCur').style.left = pct + '%';
-  if ($('tlFill')) $('tlFill').style.width = pct + '%';
-  const nc = $('cronNext');
-  if (nc) { const n = steps.slice(stepIdx).find(s => s.cron); nc.textContent = cronActive() && n ? hm(n.t) : '—'; }
+  $('phoneDay').textContent = dhm(st.t);
+  $('nowClock').textContent = dhm(st.t);
+  const p = tlPos(st.t);
+  if ($('tlCur')) $('tlCur').style.left = p + '%';
+  if ($('tlFill')) $('tlFill').style.width = p + '%';
+  if ($('cronCount')) {
+    const n = cronCount(st);
+    $('cronCount').textContent = n.toLocaleString('en-IN');
+    $('cronNext').textContent = cronWatching(st) ? dhm(START + (n + 1) * 900).replace('Day 0 · ', '') : '—';
+    if (st.skipping) $('cronRuns').innerHTML = cronRunsHtml();
+  }
+  if (st.skipping && $('skipDay')) $('skipDay').textContent = dhm(st.t);
+}
+
+function renderSkip() {
+  $('skipLayer').innerHTML = st.skipping
+    ? `<div class="skip-ov"><div><span>⏩ Skipping ahead</span><b id="skipDay">${dhm(st.t)}</b><span>${after() ? 'cron still checking every 15 min' : 'nobody is watching this order'}</span></div></div>` : '';
+  $('beDay').classList.toggle('skipping', st.skipping);
+}
+
+/* timeline: linear for A and B1; for B2, Day 0 10:00–13:15 takes 45% and Days 0–5 share the rest */
+function tlSegs() {
+  if (scenario === 'B2') return [[START, T(13, 15), 0, 45], [T(13, 15), T(12, 0, 0, 5), 45, 100]];
+  return [[START, scenario === 'B1' ? T(13, 30) : T(12, 15), 0, 100]];
+}
+function tlPos(t) {
+  for (const [a, b, pa, pb] of tlSegs()) if (t <= b) return Math.max(0, pa + (t - a) / (b - a) * (pb - pa));
+  return 100;
+}
+function cronRunsHtml() {
+  const n = cronCount(st);
+  if (!n) return '<span class="plain">First run at 10:15</span>';
+  const out = [];
+  for (let k = Math.max(1, n - 5); k <= n; k++) { const t = START + k * 900; out.push(`<span class="${t === st.cronHit ? 'hit' : ''}">${dayOf(t) ? 'D' + dayOf(t) + ' ' : ''}${hm(t)}</span>`); }
+  return (n > 6 ? `<span class="plain">…${(n - 6).toLocaleString('en-IN')} earlier</span>` : '') + out.join('');
+}
+
+function renderBackend() {
+  const segs = tlSegs(), first = segs[0], P = t => tlPos(t).toFixed(2) + '%';
+  let tl = '<div class="tl-line"></div><div class="tl-fill" id="tlFill"></div>';
+  for (let t = first[0]; t <= first[1]; t += 900) {
+    if (after() && t > START) tl += `<div class="tl-tick${t <= START + cronCount(st) * 900 ? ' ran' : ''}" style="left:${P(t)}"></div>`;
+    if ((t - START) % 3600 === 0 || (segs.length === 1 && (t - START) % 1800 === 0)) tl += `<div class="tl-lab" style="left:${P(t)}">${hm(t)}</div>`;
+  }
+  if (segs.length > 1) {
+    tl += `<div class="tl-brk" style="left:${P(segs[1][0] + 1)}"></div>`;
+    for (let d = 1; d <= 5; d++) tl += `<div class="tl-lab d" style="left:${P(T(10, 0, 0, d))}">Day ${d}</div>`;
+  }
+  if (after()) tl += `<div class="tl-mark deadline" style="left:${P(DEADLINE)}">2-hr promise</div>`;
+  st.marks.forEach(m => { tl += `<div class="tl-mark ${m.kind}" style="left:${P(m.t)}">${m.label}</div>`; });
+  tl += '<div class="tl-cur" id="tlCur"></div>';
+  $('tl').innerHTML = tl;
+
+  const o = st.order;
+  if (!o) $('ordersBox').innerHTML = `<div class="empty">${scenario ? 'No orders yet. Waiting for the shopper to check out…' : 'Pick a scenario to start.'}</div>`;
+  else {
+    const chip = { awaiting: ['awaiting', 'Awaiting payment'], confirmed: ['confirmed', 'Confirmed'], notconf: ['notconf', 'Not confirmed (2 h passed)'],
+                   failed: ['failed', 'Closed (payment failed)'], cancelled: ['cancelled', 'Cancelled'] }[o.status];
+    $('ordersBox').innerHTML = `<table class="orders"><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Method</th><th>Created</th><th>Status</th></tr></thead>
+      <tbody><tr><td class="mono"><b>${ORDER_ID}</b></td><td>${CUSTOMER.name}</td><td>${AMT}</td><td>UPI</td><td class="mono">D0 ${hms(o.created)}</td>
+      <td><span class="chip dot ${chip[0]}${o.flash ? ' flash' : ''}">${chip[1]}</span>${o.unmatched ? ' <span class="chip unmatched">₹2,499 unmatched</span>' : ''}${st.phone.pay === 'locked' ? ' <span class="chip closed" title="Customer’s Pay button is disabled">Pay locked</span>' : ''}</td></tr></tbody></table>`;
+    o.flash = false;
+  }
+
+  const oc = st.outcome;
+  $('outcomeBox').innerHTML = oc ? `<div class="outcome ${oc.good ? 'good' : 'bad'}"><div style="color:${oc.good ? 'var(--ok)' : 'var(--alert)'};margin-top:3px">${oc.good ? ICON.check : ICON.x}</div>
+    <div><h4>Outcome · ${oc.h}</h4><p>${oc.p}</p><ul>${oc.li.map(x => `<li>${x}</li>`).join('')}</ul></div></div>` : '';
+
+  const logs = [...st.logs].sort((x, y) => y.t - x.t || y.id - x.id);
+  $('logList').innerHTML = logs.length ? logs.map(l => `<div class="lrow ${l.kind}${l.id > lastSeenLog ? ' new' : ''}"><span class="lt">D${dayOf(l.t)} ${hms(l.t)}</span><span class="src ${l.src}">${l.src}</span><span class="msg">${l.msg}</span></div>`).join('')
+    : '<div class="empty">Waiting for events…</div>';
+  lastSeenLog = logSeq; $('logList').scrollTop = 0;
+
+  if (!after()) {
+    $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net check</h4></div>
+      <div class="rule bad">None today. If a Razorpay webhook is late or lost, nothing re-checks the payment.</div>
+      <div class="rule">Rule in place: auto-cancel any order unpaid after 15 minutes.</div>`;
+    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Support ticket</h4></div><div class="rule bad">No ticket. Today the order page has no way for the shopper to report a debit, so support only hears about it when they call or email.</div>`;
+    return;
+  }
+
+  $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net cron</h4><span class="sub">every 15 min</span></div>
+    <div class="cron-stats"><div>Runs so far<b id="cronCount">0</b></div><div>Next run<b id="cronNext">—</b></div><div>Watching<b>${cronWatching(st) ? ORDER_ID : '—'}</b></div></div>
+    <div class="cron-runs" id="cronRuns">${cronRunsHtml()}</div>`;
+
+  const tk = st.ticket;
+  if (!tk) {
+    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Support ticket</h4><span class="sub">auto-created from the order page</span></div><div class="empty" style="padding:4px 0">No ticket yet. One is created the moment the shopper taps “Money debited? Yes”.</div>`;
+  } else {
+    const chip = tk.status === 'open' ? '<span class="chip open dot">Open</span>' : '<span class="chip closed">Closed</span>';
+    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Ticket #${TICKET_ID}</h4><span>${tk.updated ? '<span class="chip confirmed">Updated</span> ' : ''}${chip}</span></div>
+      <div class="tk-grid"><div>Customer<b>${CUSTOMER.name}</b></div><div>Phone<b>${CUSTOMER.phone}</b></div>
+      <div>Linked order<b>${ORDER_ID}</b></div><div>Amount<b>${AMT} · UPI</b></div>
+      <div>Source<b>Customer CTA (auto-filled)</b></div><div>Created<b>D0 ${hms(tk.created)}</b></div></div>
+      <div class="tk-agent"><span class="av">P</span> Agent <b>Priya</b> <span class="small">assigned automatically</span></div>
+      <div class="thread" id="tkThread">${tk.thread.map(m => `<div class="bub${m.who === 'System' ? ' sys' : ''}"><div class="who"><span>${m.who}</span><span>${dhm(m.t)}</span></div>${m.text}</div>`).join('')}</div>`;
+    const th = $('tkThread'); th.scrollTop = th.scrollHeight;
+  }
 }
 
 function renderPhone() {
@@ -678,23 +928,38 @@ function statusScreen() {
   const s = st.phone.status;
   const track = n => `<div class="track"><b>Placed</b><i class="${n >= 1 ? 'd' : ''}"></i><b>Payment</b><i class="${n >= 2 ? 'd' : ''}"></i><b>Confirmed</b></div>`;
   let out = `<div class="ordhead"><h2>Order ${ORDER_ID}</h2><span>${AMT} · UPI</span></div>`;
+  if (s === 'processing') {
+    return out + `<div class="state neutral" style="text-align:center;padding:26px 16px"><div class="spin br"></div>
+      <h3>Processing your payment…</h3><p>Please don’t press back or close the app.</p></div>
+      <button class="btn primary">Retry payment · ₹2,499</button>`;
+  }
+  if (s === 'cancelled') {
+    return out + `<div class="state bad"><div class="sic">${ICON.x}</div><h3>Order cancelled</h3><p>We didn’t receive your payment.</p></div>
+      <button class="btn secondary">Continue shopping</button>`;
+  }
   if (s === 'pending') {
     out += `<div class="state pending"><div class="sic">${ICON.clock}</div>
       <h3>Payment pending: we’re confirming with your bank.</h3>
-      <p class="promise">${ICON.clock} Confirming within 30 min, at most 2 hours.</p>${track(1)}</div>
-      <button class="btn primary" disabled>Pay ₹2,499</button>
-      <p class="reason">${ICON.lock}<span>Disabled so you don’t pay twice while we confirm.</span></p>`;
+      <p class="promise">${ICON.clock} Confirming within 30 min, at most 2 hours.</p>${track(1)}</div>`;
+  } else if (s === 'notConfirmed') {
+    out += `<div class="state pending"><div class="sic">${ICON.clock}</div>
+      <h3>We haven’t received your payment yet.</h3>
+      <p>If it reaches us, we’ll place your order. If it failed, your bank returns the money within 5 days.</p>${track(1)}</div>`;
   } else if (s === 'confirmed') {
     out += `<div class="state ok"><div class="sic">${ICON.check}</div><h3>Payment received. Order ${ORDER_ID} confirmed.</h3>
       <p>We’ll share tracking as soon as it ships.</p>${track(2)}</div>`;
   } else if (s === 'lateConfirmed') {
     out += `<div class="state ok"><div class="sic">${ICON.check}</div><h3>Good news: your payment came through. Order ${ORDER_ID} is confirmed.</h3>
-      <p>No refund to wait for: your ${AMT} went to this order.</p>${track(2)}</div>`;
-  } else if (s === 'refund') {
-    out += `<div class="state bad"><div class="sic">${ICON.back}</div><h3>We couldn’t confirm your payment. Your money will be back in 3–5 days.</h3>
-      <p>Your bank returns it to A/c XX1234 automatically.</p></div>
-      <button class="btn primary">Pay again · ₹2,499</button>
-      <p class="reason"><span>Pay is enabled again. Reorder whenever you’re ready.</span></p>`;
+      <p>We’ll share tracking as soon as it ships.</p>${track(2)}</div>`;
+  } else if (s === 'failedClosed') {
+    out += `<div class="state neutral"><div class="sic">${ICON.bank}</div><h3>Your bank should have returned ₹2,499 to your account by now.</h3>
+      <p>If you haven’t received it, reply here with your UPI reference and we’ll help.</p></div>`;
+  }
+  if (st.phone.pay === 'locked') {
+    out += `<button class="btn primary" disabled>Pay ₹2,499</button>
+      <p class="reason">${ICON.lock}<span>${s === 'notConfirmed' ? 'Still disabled: if your first payment reaches us, it will be used for this order.' : 'Disabled so you don’t pay twice while we confirm.'}</span></p>`;
+  } else if (st.phone.pay === 'again') {
+    out += `<button class="btn secondary">Order again · ₹2,499</button>`;
   }
   if (st.ticket) out += phoneTicket();
   else if (s === 'pending') {
@@ -707,14 +972,17 @@ function statusScreen() {
 
 function phoneTicket() {
   const tk = st.ticket;
-  const chip = tk.status === 'open' ? '<span class="chip open dot">Open</span>' : '<span class="chip resolved">Resolved</span>';
-  const msgs = tk.thread.filter(m => m.who !== 'System').slice(-2);
-  const fresh = tk.thread[tk.thread.length - 1];
+  const fresh = tk.thread.length <= 2;
+  const resolved = st.phone.status === 'confirmed' || st.phone.status === 'lateConfirmed';
+  const chip = tk.status === 'open' ? '<span class="chip open dot">Open</span>' : resolved ? '<span class="chip resolved">Resolved</span>' : '<span class="chip closed">Closed</span>';
+  const msgs = tk.thread.filter(m => m.who !== 'System').slice(fresh ? -1 : -2);
+  const last = tk.thread[tk.thread.length - 1];
+  const line = tk.status === 'open' ? (fresh ? 'Agent Priya is assigned and will keep you updated.' : 'Still open. Agent Priya will update you here.') : 'Agent Priya kept you updated on this ticket.';
   return `<div class="card-p">
-    <div class="tk-top"><h4>Ticket #${TICKET_ID}${tk.status === 'open' ? ' created' : ''}</h4>${chip}</div>
-    <p class="tk-msg">${tk.status === 'open' ? 'Agent Priya is assigned and will keep you updated.' : 'Agent Priya kept you updated on this ticket.'}</p>
-    <div class="kv"><div>Name<b>${CUSTOMER.name}</b></div><div>Phone<b>${CUSTOMER.phone}</b></div><div>Order ID<b>${ORDER_ID}</b></div><div>Amount<b>${AMT}</b></div></div>
-    <div class="thread">${msgs.map(m => `<div class="bub${m === fresh && tk.thread.length > 2 ? ' new' : ''}"><div class="who"><span>${m.who} · Support</span><span>${hm(m.t)}</span></div>${m.text}</div>`).join('')}</div>
+    <div class="tk-top"><h4>Ticket #${TICKET_ID}${fresh ? ' created' : ''}</h4>${chip}</div>
+    <p class="tk-msg">${line}</p>
+    ${fresh ? `<div class="kv"><div>Name<b>${CUSTOMER.name}</b></div><div>Phone<b>${CUSTOMER.phone}</b></div><div>Order ID<b>${ORDER_ID}</b></div><div>Amount<b>${AMT}</b></div></div>` : ''}
+    <div class="thread">${msgs.map(m => `<div class="bub${m === last && !fresh ? ' new' : ''}"><div class="who"><span>${m.who} · Support</span><span>${dhm(m.t)}</span></div>${m.text}</div>`).join('')}</div>
   </div>`;
 }
 
@@ -747,59 +1015,6 @@ function renderBanner() {
   }, 4800);
 }
 
-function tlRange() { return [START, scenario === 'C' ? T(13, 30) : T(12, 15)]; }
-function cronActive() { return st.order && st.order.status !== 'confirmed' && !(scenario !== 'C' && st.order.status === 'refund'); }
-
-function renderBackend() {
-  const [a, b] = tlRange(), pos = t => ((t - a) / (b - a) * 100).toFixed(2) + '%';
-  let tl = '<div class="tl-line"></div><div class="tl-fill" id="tlFill"></div>';
-  for (let t = a; t <= b; t += 900) {
-    if (t > a) tl += `<div class="tl-tick${st.cronRuns.includes(t) ? ' ran' : ''}" style="left:${pos(t)}"></div>`;
-    if ((t - a) % 1800 === 0) tl += `<div class="tl-lab" style="left:${pos(t)}">${hm(t)}</div>`;
-  }
-  tl += `<div class="tl-mark deadline" style="left:${pos(DEADLINE)}">2-hr promise</div>`;
-  st.marks.forEach(m => { tl += `<div class="tl-mark ${m.kind}" style="left:${pos(m.t)}">${m.label}</div>`; });
-  tl += '<div class="tl-cur" id="tlCur"></div>';
-  $('tl').innerHTML = tl;
-
-  const o = st.order;
-  if (!o) $('ordersBox').innerHTML = `<div class="empty">${scenario ? 'No orders yet. Waiting for the shopper to check out…' : 'Pick a scenario to start.'}</div>`;
-  else {
-    const chip = { awaiting: ['awaiting', 'Awaiting payment'], confirmed: ['confirmed', 'Confirmed'], refund: ['refund', 'Not received: refund expected'] }[o.status];
-    $('ordersBox').innerHTML = `<table class="orders"><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Method</th><th>Created</th><th>Status</th></tr></thead>
-      <tbody><tr><td class="mono"><b>${ORDER_ID}</b></td><td>${CUSTOMER.name}</td><td>${AMT}</td><td>UPI</td><td class="mono">${hms(o.created)}</td>
-      <td><span class="chip dot ${chip[0]}${o.flash ? ' flash' : ''}">${chip[1]}</span>${st.payLocked ? ' <span class="chip closed" title="Customer’s Pay button is disabled">Pay locked</span>' : ''}</td></tr></tbody></table>`;
-    o.flash = false;
-  }
-
-  const oc = st.outcome;
-  $('outcomeBox').innerHTML = oc ? `<div class="outcome good"><div style="color:var(--ok);margin-top:3px">${ICON.check}</div>
-    <div><h4>Outcome · ${oc.h}</h4><p>${oc.p}</p><ul>${oc.li.map(x => `<li>${x}</li>`).join('')}</ul></div></div>` : '';
-
-  const logs = [...st.logs].sort((x, y) => y.t - x.t || y.id - x.id);
-  $('logList').innerHTML = logs.length ? logs.map(l => `<div class="lrow ${l.kind}${l.id > lastSeenLog ? ' new' : ''}"><span class="lt">${hms(l.t)}</span><span class="src ${l.src}">${l.src}</span><span class="msg">${l.msg}</span></div>`).join('')
-    : '<div class="empty">Waiting for events…</div>';
-  lastSeenLog = logSeq; $('logList').scrollTop = 0;
-
-  $('cronBox').innerHTML = `<div class="panel-h"><h4>Safety-net cron</h4><span class="sub">every 15 min</span></div>
-    <div class="cron-stats"><div>Runs so far<b>${st.cronRuns.length}</b></div><div>Next run<b id="cronNext">—</b></div><div>Watching<b>${cronActive() ? ORDER_ID : '—'}</b></div></div>
-    <div class="cron-runs">${st.cronRuns.map(t => `<span>${hm(t)}</span>`).join('') || '<span style="background:transparent;color:var(--muted);padding:0;font-family:var(--sans)">First run at 10:15</span>'}</div>`;
-
-  const tk = st.ticket;
-  if (!tk) {
-    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Support ticket</h4><span class="sub">auto-created from the order page</span></div><div class="empty" style="padding:4px 0">No ticket yet. One is created the moment the shopper taps “Money debited? Yes”.</div>`;
-  } else {
-    const chip = tk.status === 'open' ? '<span class="chip open dot">Open</span>' : '<span class="chip closed">Closed</span>';
-    $('ticketBox').innerHTML = `<div class="panel-h"><h4>Ticket #${TICKET_ID}</h4><span>${tk.updated ? '<span class="chip confirmed">Updated</span> ' : ''}${chip}</span></div>
-      <div class="tk-grid"><div>Customer<b>${CUSTOMER.name}</b></div><div>Phone<b>${CUSTOMER.phone}</b></div>
-      <div>Linked order<b>${ORDER_ID}</b></div><div>Amount<b>${AMT} · UPI</b></div>
-      <div>Source<b>Customer CTA (auto-filled)</b></div><div>Created<b>${hms(tk.created)}</b></div></div>
-      <div class="tk-agent"><span class="av">P</span> Agent <b>Priya</b> <span class="small">assigned automatically</span></div>
-      <div class="thread" id="tkThread">${tk.thread.map(m => `<div class="bub${m.who === 'System' ? ' sys' : ''}"><div class="who"><span>${m.who}</span><span>${hm(m.t)}</span></div>${m.text}</div>`).join('')}</div>`;
-    const th = $('tkThread'); th.scrollTop = th.scrollHeight;
-  }
-}
-
 /* ================= Phone scaling ================= */
 function fitPhone() {
   phoneScale = Math.max(0.5, Math.min(1, $('phoneHolder').clientHeight / 800));
@@ -813,12 +1028,28 @@ $('scCards').addEventListener('click', e => {
   const c = e.target.closest('[data-sc]');
   if (c) run(c.dataset.sc);
 });
+$('modeSeg').addEventListener('click', e => {
+  const b = e.target.closest('[data-mode]'); if (!b || b.dataset.mode === cfg.mode) return;
+  cfg.mode = b.dataset.mode;
+  if (scenario) run(scenario); else { renderOpts(); renderBackend(); }
+});
+$('spSeg').addEventListener('click', e => {
+  const b = e.target.closest('[data-sp]'); if (!b) return;
+  cfg.speed = +b.dataset.sp; renderOpts();
+});
+$('whMissed').addEventListener('change', e => {
+  cfg.webhookMissed = e.target.checked;
+  run('A');
+});
 window.addEventListener('resize', fitPhone);
 
 st = initState(); ptrPark();
+const q = new URLSearchParams(location.search);
+if (q.get('m') === 'before') cfg.mode = 'before';
+if (q.get('missed') === '1') cfg.webhookMissed = true;
 renderAll(); fitPhone();
-const q = (new URLSearchParams(location.search).get('s') || '').toUpperCase();
-if (SCENARIOS[q]) run(q);
+const qs = (q.get('s') || '').toUpperCase();
+if (SCENARIOS[qs]) run(qs);
 })();
 </script>
 </body>
